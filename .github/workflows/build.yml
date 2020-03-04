@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Install node packages
-        uses: bahmutov/npm-install@v1
+        uses: bahmutov/npm-install@HEAD
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
