@@ -15,8 +15,7 @@ export const githubRedirectUrl = apiOrigin + '/oauth/redirect'
 export const githubLoginUrl = `${githubAuthorizeUrl}?client_id=${githubClientId}&redirect_uri=${githubRedirectUrl}`
 
 // 当前项目的仓库地址，github actions 相关的操作会用到
-export const githubRepoUrl =
-  'https://github.com/ffx0s/node-actions-demo/actions'
+export const githubRepoUrl = 'https://github.com/ffx0s/hiweb-client/actions'
 
 // 又拍云配置
 export const bucketName = 'image-hiweb'
