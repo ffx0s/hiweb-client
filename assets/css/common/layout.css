@@ -1,0 +1,125 @@
+html {
+  font-size: 16px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (hover: none) {
+  html {
+    /* 解决移动设备 html 绑定 click 无效问题 */
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 414px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+body {
+  font-family: -apple-system-font, Helvetica Neue, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  word-break: break-all;
+  background-color: var(--background);
+}
+
+body a {
+  text-decoration: none;
+  transition: color 0.3s;
+  &:hover {
+    color: var(--primary);
+  }
+  &.active-link {
+    color: var(--primary);
+  }
+}
+
+body.custom-scrollbar {
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: var(--lightGray);
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--textRegular);
+    border-radius: 20px;
+  }
+}
+
+.logo {
+  mask-image: url(~assets/images/logo.svg);
+  mask-repeat: no-repeat;
+  mask-size: contain;
+}
+
+.wrapper {
+  max-width: var(--wrapWdith);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--gap);
+  padding-right: var(--gap);
+}
+
+.box {
+  background-color: var(--themeBackground);
+  border-radius: 4px;
+  /* box-shadow: var(--shadow); */
+}
+
+.theme-icon {
+  position: absolute;
+  right: -15px;
+  top: -5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform .3s;
+  &:hover {
+    transform: translateY(-2px);
+  }
+  &.icon-sun-inv {
+    display: none;
+  }
+  &.icon-moon {
+    color: var(--border);
+  }
+}
+
+@media (max-width: 414px) {
+  .wrapper {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+  .box {
+    border-radius: 0;
+  }
+}
+
+/* .page-in-enter-active,
+.page-out-leave-active {
+  position: absolute;
+  top: 0;
+  will-change: transform;
+  transition: transform .5s, opacity .5s;
+  backface-visibility: hidden;
+  perspective: 1000;
+  z-index: 3;
+}
+.page-out-enter-active {
+  z-index: 2;
+}
+.page-in-enter,
+.page-out-leave-to {
+  opacity: 0;
+  transform: translate3d(0, 46px, 0);
+}
+.page-in-enter-to,
+.page-out-leave {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+.page-in-leave,
+.page-in-leave-active {
+  display: none;
+} */

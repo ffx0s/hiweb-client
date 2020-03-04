@@ -1,0 +1,8 @@
+mutation createOrUpdateTag($tag: TagInput!) {
+  createOrUpdateTag(tag: $tag) {
+    id
+    name
+    sort
+    created
+  }
+}

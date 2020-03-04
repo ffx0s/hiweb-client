@@ -1,0 +1,10 @@
+query categories($sort: CategorySortInput) {
+  categories(sort: $sort) {
+    id
+    name
+    sort
+    created
+    keywords
+    postsNumber
+  }
+}

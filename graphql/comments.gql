@@ -1,0 +1,49 @@
+fragment commentUser on User {
+  id
+  username
+  name
+  avatar
+}
+
+query getComments(
+  $offset: Int
+  $page: Int
+  $limit: Int
+  $sort: Int
+  $type: CommentType
+  $typeId: String
+  $parentId: String
+) {
+  comments(
+    offset: $offset
+    page: $page
+    limit: $limit
+    sort: $sort
+    type: $type
+    typeId: $typeId
+    parentId: $parentId
+  ) @connection(key: "comments", filter: ["type", "typeId", "parentId"]) {
+    docs {
+      id
+      type
+      typeId
+      parentId
+      count
+      user {
+        ...commentUser
+      }
+      content
+      # ip
+      # userAgent
+      to {
+        ...commentUser
+      }
+      created
+    }
+    offset
+    page
+    pages
+    limit
+    total
+  }
+}
