@@ -1,0 +1,3 @@
+mutation createOrUpdatePost($post: PostInput!) {
+	createOrUpdatePost(post: $post)
+}

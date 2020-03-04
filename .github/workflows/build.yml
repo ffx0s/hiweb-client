@@ -1,0 +1,31 @@
+name: generate static page
+
+on: [repository_dispatch]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12]
+
+    steps:
+      - name: Install node packages
+        uses: bahmutov/npm-install@v1
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      
+      - name: Nuxt generate
+        run: npm run generate
+
+      - name: Upload pages
+        uses: ffx0s/upx-actions@master
+        with:
+          bucket: ${{secrets.BUCKET}}
+          operator: ${{ secrets.OPERATOR }}
+          password: ${{ secrets.PASSWORD }}
+      - run: upx ./dist/ /

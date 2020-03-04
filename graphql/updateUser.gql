@@ -1,0 +1,10 @@
+mutation updateUser($user: UpdateUserInput) {
+  updateUser(user: $user) {
+    id
+		username
+    name
+    role
+		created
+		avatar
+  }
+}

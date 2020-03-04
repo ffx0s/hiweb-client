@@ -1,0 +1,56 @@
+<template>
+  <div :class="$style.tags" class="box">
+    <Tags :tags="tags.docs" />
+  </div>
+</template>
+
+<script>
+import gql from 'graphql-tag'
+import { beforeAsyncData } from '@/utils/shared'
+import Tags from '@/components/tags'
+
+const TAGS_QUERY = gql`
+  query tags($page: Int, $limit: Int) {
+    tags(page: $page, limit: $limit) {
+      docs {
+        name
+      }
+    }
+  }
+`
+
+export default {
+  head() {
+    return {
+      title: '标签 | hiweb',
+      meta: [
+        { hid: 'keywords', name: 'keywords', content: '标签' },
+        { hid: 'description', name: 'description', content: '标签' }
+      ]
+    }
+  },
+  components: {
+    Tags
+  },
+  asyncData: beforeAsyncData(({ app, route }) => {
+    return app.apolloProvider.defaultClient
+      .query({
+        fetchPolicy: 'no-cache',
+        query: TAGS_QUERY,
+        variables: {
+          page: 1,
+          limit: 100
+        }
+      })
+      .then((result) => {
+        return { tags: result.data.tags }
+      })
+  })
+}
+</script>
+
+<style lang="postcss" module>
+.tags {
+  padding: var(--gap);
+}
+</style>

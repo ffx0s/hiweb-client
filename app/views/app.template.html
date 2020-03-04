@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {{
+      HEAD
+    }}
+  </head>
+
+  <body>
+    <script>
+      (function () {
+        var classNames = []
+        if (!navigator.userAgent.includes('Mac')) {
+          classNames.push('custom-scrollbar')
+        }
+        if (localStorage && localStorage.THEME) {
+          classNames.push(localStorage.THEME)
+        }
+        document.body.className += ' ' + classNames.join(' ')
+      })()
+    </script>
+    {{ APP }}
+  </body>
+</html>

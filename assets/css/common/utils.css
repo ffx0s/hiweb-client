@@ -1,0 +1,118 @@
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
+}
+
+.display-flex {
+  display: flex;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-center {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.row-between {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.row-center {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.word-break {
+  word-break: break-all;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-hidden {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.clear:after {
+  content: "";
+  display: block;
+  clear: both;
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}
+
+.lazy-img-box {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.lazy-img-box[lazy="loaded"],
+img[lazy="loaded"] {
+  opacity: 0;
+  animation-name: fadein;
+  animation-duration: 0.5s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-direction: normal;
+  animation-timing-function: ease-out;
+}
+
+img[lazy="error"] {
+  margin: 0 auto;
+  height: 100%;
+}
+
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.list-item {
+  transition: transform 800ms, opacity 800ms;
+}
+.list-enter, .list-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
+.list-leave-active {
+  position: absolute;
+}

@@ -1,0 +1,10 @@
+mutation createOrUpdateCategory($category: CategoryInput!) {
+  createOrUpdateCategory(category: $category) {
+    id
+    name
+    sort
+    created
+    keywords
+    postsNumber
+  }
+}

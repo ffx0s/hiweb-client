@@ -1,0 +1,13 @@
+mutation addComment($comment: CommentInput!) {
+  addComment(comment: $comment) {
+    id
+		type
+		typeId
+		parentId
+		count
+		content
+		ip
+		userAgent
+		created
+  }
+}
