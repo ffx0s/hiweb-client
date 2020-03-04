@@ -13,8 +13,6 @@ jobs:
     steps:
       - name: Install node packages
         uses: bahmutov/npm-install@HEAD
-        with:
-          useLockFile: true
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
