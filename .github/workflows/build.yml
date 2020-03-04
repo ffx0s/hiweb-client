@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       # - run: ping 49.234.236.139 -c 8
-      - run: curl -X POST https://httpbin.org/post
+      - run: curl -X POST https://i.webfed.cn
 
       # - name: Install node packages
       #   uses: bahmutov/npm-install@HEAD
