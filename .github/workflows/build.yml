@@ -11,6 +11,8 @@ jobs:
         node-version: [12]
 
     steps:
+      - uses: actions/checkout@v2
+
       - name: Install node packages
         uses: bahmutov/npm-install@HEAD
 
