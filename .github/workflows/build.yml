@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Install node packages
         uses: bahmutov/npm-install@HEAD
+        with:
+          working-directory: ./
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
@@ -28,4 +30,4 @@ jobs:
           bucket: ${{secrets.BUCKET}}
           operator: ${{ secrets.OPERATOR }}
           password: ${{ secrets.PASSWORD }}
-      - run: upx ./dist/ /
+        run: upx ./dist/ /
