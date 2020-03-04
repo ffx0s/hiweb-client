@@ -1,6 +1,6 @@
 name: generate static page
 
-on: [repository_dispatch]
+on: [repository_dispatch, push]
 
 jobs:
   build:
@@ -12,26 +12,24 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      # - run: ping 49.234.236.139 -c 8
-      - run: curl -X POST https://i.webfed.cn
 
-      # - name: Install node packages
-      #   uses: bahmutov/npm-install@HEAD
+      - name: Install node packages
+        uses: bahmutov/npm-install@HEAD
 
-      # - name: Use Node.js ${{ matrix.node-version }}
-      #   uses: actions/setup-node@v1
-      #   with:
-      #     node-version: ${{ matrix.node-version }}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
       
-      # - name: Nuxt generate
-      #   run: npm run generate
+      - name: Nuxt generate
+        run: npm run generate
 
-      # - name: Upyun login
-      #   uses: ffx0s/upx-actions@master
-      #   with:
-      #     bucket: ${{secrets.BUCKET}}
-      #     operator: ${{ secrets.OPERATOR }}
-      #     password: ${{ secrets.PASSWORD }}
+      - name: Upyun login
+        uses: ffx0s/upx-actions@master
+        with:
+          bucket: ${{secrets.BUCKET}}
+          operator: ${{ secrets.OPERATOR }}
+          password: ${{ secrets.PASSWORD }}
 
-      # - name: Upload pages
-      #   run: upx ./dist/ /
+      - name: Upload pages
+        run: upx ./dist/ /
