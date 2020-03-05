@@ -11,3 +11,6 @@ export function beforeAsyncData(asyncDataFn) {
 export function isFunction(fn) {
   return typeof fn === 'function'
 }
+
+export const sleep = (time) =>
+  new Promise((resolve) => setTimeout(resolve, time))
