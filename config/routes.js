@@ -4,9 +4,13 @@
 
 import axios from 'axios'
 import { formatDate } from '../utils/filters'
+import { sleep } from '../utils/shared'
 import { apiUrl } from './index'
 
-function createListRoutes({ routePath, name, limit, query = '' }) {
+const delay = 1000
+
+async function createListRoutes({ routePath, name, limit, query = '' }) {
+  await sleep(delay)
   return axios
     .post(apiUrl, {
       query: `query {${name}(page: 1, limit: ${limit}, ${query}) { pages }}`
@@ -30,12 +34,16 @@ export default async function createRoutes() {
     limit: 8
   })
 
+  await sleep(delay)
+
   // postRoutes
   const postRoutes = await axios
     .post(apiUrl, { query: 'query {postIds}' })
     .then(({ data }) => {
       return data.data.postIds.map((id) => '/post/' + id + '/')
     })
+
+  await sleep(delay)
 
   // categories
   const categories = await axios
@@ -46,21 +54,24 @@ export default async function createRoutes() {
       return data.data.categories.map(({ name }) => name)
     })
 
+  await sleep(delay)
+
   // categoryRoutes
-  let categoryRoutes = []
-  await Promise.all(
-    categories.map((name) => {
-      return createListRoutes({
+  const categoryRoutes = await (async function() {
+    let allRoutes = []
+    for (let i = 0; i < categories.length; i++) {
+      const name = categories[i]
+      const routes = await createListRoutes({
         routePath: '/category/' + name + '/',
         name: 'posts',
         limit: 8,
         query: `category: "${name}"`
-      }).then((routes) => {
-        categoryRoutes.push('/category/' + name + '/')
-        categoryRoutes = categoryRoutes.concat(routes)
       })
-    })
-  )
+      allRoutes.push('/category/' + name + '/')
+      allRoutes = allRoutes.concat(routes)
+    }
+    return allRoutes
+  })()
 
   // archiveListRoutes
   const archiveLimit = 5
@@ -69,6 +80,8 @@ export default async function createRoutes() {
     name: 'archives',
     limit: archiveLimit
   })
+
+  await sleep(delay)
 
   // archiveRoutes
   const archiveTotal = archiveListRoutes.length * archiveLimit
@@ -82,6 +95,8 @@ export default async function createRoutes() {
       )
     })
 
+  await sleep(delay)
+
   // tagListRoutes
   const tags = await axios
     .post(apiUrl, {
@@ -91,20 +106,23 @@ export default async function createRoutes() {
       return data.data.tags.docs.map(({ name }) => name)
     })
 
-  let tagListRoutes = []
-  await Promise.all(
-    tags.map((name) => {
-      return createListRoutes({
+  await sleep(delay)
+
+  const tagListRoutes = await (async function() {
+    let allRoutes = []
+    for (let i = 0; i < tags.length; i++) {
+      const name = tags[i]
+      const routes = await createListRoutes({
         routePath: '/tag/' + name + '/',
         name: 'posts',
         limit: 8,
         query: `tag: "${name}"`
-      }).then((routes) => {
-        tagListRoutes.push('/tag/' + name + '/')
-        tagListRoutes = tagListRoutes.concat(routes)
       })
-    })
-  )
+      allRoutes.push('/tag/' + name + '/')
+      allRoutes = allRoutes.concat(routes)
+    }
+    return allRoutes
+  })()
 
   const pageRoutes = [].concat(
     categoryRoutes,

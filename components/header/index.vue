@@ -24,12 +24,6 @@
   </div>
 </template>
 
-<script>
-export default {
-  mounted() {}
-}
-</script>
-
 <style lang="postcss" module>
 .header {
   width: var(--headerWidth);

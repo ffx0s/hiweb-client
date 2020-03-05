@@ -137,7 +137,7 @@ export default {
   },
 
   generate: {
-    interval: 800,
+    interval: 2000,
     exclude: [/^(?=.*\bedit\b).*$/, /^(?=.*\bmanage\b).*$/],
     // fallback: false,
     // subFolders: false,
