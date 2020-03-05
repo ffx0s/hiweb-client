@@ -34,7 +34,7 @@ npm run generate
 
 1. 在 github 上创建一个新的 repository，导入这个项目的代码。
 2. 在 又拍云 上创建一个云存储服务用于存储页面资源。
-3. 修改项目配置文件： `/hiweb-client/config/index.ts`。
+3. 修改项目配置文件： `/hiweb-client/config/index.js`。
 
 完成后，只要 `push` 代码到仓库就会自动触发构建打包的流程，或者你也可以前往 `https://mysite.com/manage` 点击页面上的部署按钮触发这个流程。
 
