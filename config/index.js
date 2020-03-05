@@ -19,5 +19,5 @@ export const githubRepoUrl = 'https://github.com/ffx0s/hiweb-client/actions'
 
 // 又拍云配置
 export const bucketName = 'image-hiweb'
-export const uploadUrl = 'http://v0.api.upyun.com/' + bucketName
+export const uploadUrl = 'https://v0.api.upyun.com/' + bucketName
 export const cdn = 'https://assets.webfed.cn'
