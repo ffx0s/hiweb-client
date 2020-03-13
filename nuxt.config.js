@@ -23,8 +23,15 @@ export default {
         name: 'description',
         content: process.env.npm_package_description || ''
       }
+      // 是否启用 WebApp 全屏模式，删除苹果默认的工具栏和菜单栏
+      // { name: 'apple-mobile-web-app-capable', content: 'yes' },
+      // // 顶部状态栏：黑色
+      // {
+      //   name: 'apple-mobile-web-app-status-bar-style',
+      //   content: 'black'
+      // }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    link: []
   },
   /*
    ** Customize the progress-bar color
@@ -137,7 +144,7 @@ export default {
   },
 
   generate: {
-    interval: 2000,
+    interval: 800,
     exclude: [/^(?=.*\bedit\b).*$/, /^(?=.*\bmanage\b).*$/],
     // fallback: false,
     // subFolders: false,
