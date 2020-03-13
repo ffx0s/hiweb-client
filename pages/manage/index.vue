@@ -171,17 +171,17 @@ export default {
         showRemoveButton = true
       } = getConfig(type)
 
-      this.title = name
-      this.showCreateButton = showCreateButton
-      this.showEditButton = showEditButton && (!!edit || !!handleEdit)
-      this.showRemoveButton =
-        showRemoveButton && (!!removeMutation || !!handleRemove)
-
       const result = await this.$apollo.query({
         fetchPolicy: 'no-cache',
         query,
         variables: { ...variables, ...vars }
       })
+
+      this.title = name
+      this.showCreateButton = showCreateButton
+      this.showEditButton = showEditButton && (!!edit || !!handleEdit)
+      this.showRemoveButton =
+        showRemoveButton && (!!removeMutation || !!handleRemove)
 
       if (result.data) {
         if (variables.limit) {
