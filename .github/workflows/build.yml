@@ -32,4 +32,4 @@ jobs:
           password: ${{ secrets.PASSWORD }}
 
       - name: Upload pages
-        run: upx sync ./dist/ /
+        run: upx sync ./dist/ / --delete
