@@ -45,19 +45,30 @@
         </h4>
         <div :class="$style.body">{{ data.summary }}...</div>
       </template>
+
       <div
         :class="[$style.body, 'markdown-body']"
         v-else-if="data.content"
         v-html="data.content"
+        @click="showImageViewer"
       />
 
       <slot />
     </div>
+
+    <client-only>
+      <ImageViewer ref="viewer" v-transfer-dom :images="images" />
+    </client-only>
   </div>
 </template>
 
 <script>
+import ImageViewer from 'lvan/imageViewer/index.vue'
+
 export default {
+  components: {
+    ImageViewer
+  },
   props: {
     data: {
       type: Object,
@@ -78,7 +89,39 @@ export default {
   },
   data() {
     return {
-      tag: this.to ? 'nuxt-link' : 'div'
+      tag: this.to ? 'nuxt-link' : 'div',
+      images: []
+    }
+  },
+  methods: {
+    showImageViewer({ target }) {
+      const tagName = target.tagName.toLowerCase()
+      const selector = '.markdown-body img'
+
+      if (tagName === 'img' && target.complete) {
+        if (!this.images.length) {
+          const images = []
+          const imgs = document.querySelectorAll(selector)
+
+          imgs.forEach((el) => {
+            images.push({
+              src: el.src,
+              alt: el.alt,
+              thumbnail: el.src,
+              w: el.naturalWidth,
+              h: el.naturalHeight
+            })
+          })
+
+          this.images = images
+        }
+
+        const index = this.images.findIndex((img) => img.src === target.src)
+
+        this.$nextTick(() => {
+          this.$refs.viewer.show({ index, selector })
+        })
+      }
     }
   }
 }
