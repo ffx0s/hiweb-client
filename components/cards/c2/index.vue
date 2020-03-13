@@ -87,10 +87,6 @@ export default {
 .image {
   display: block;
   border-radius: inherit;
-  transition: opacity 0.3s;
-  &:hover {
-    opacity: 0.9;
-  }
 }
 .titleLink {
   font-size: 1.25rem;
