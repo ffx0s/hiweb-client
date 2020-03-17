@@ -11,6 +11,12 @@ export default function({ app }) {
     }
   }
 
-  // 设置为全局变量，以便获取数据时可以在组件外调用
-  window.__defaultClient = app.apolloProvider.clients.defaultClient
+  // https://github.com/nuxt-community/apollo-module/issues/251
+  // server 端渲染不清除缓存
+  cache.originalReset = cache.reset
+  cache.reset = (...args) => {
+    if (!process.server) {
+      cache.originalReset(...args)
+    }
+  }
 }

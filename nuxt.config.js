@@ -1,4 +1,7 @@
-import createRoutes from './config/routes'
+import axios from 'axios'
+import { InMemoryCache } from 'apollo-cache-inmemory'
+import { persistCache } from 'apollo-cache-persist'
+import { apiUrl } from './config'
 
 export default {
   mode: 'universal',
@@ -45,7 +48,7 @@ export default {
    ** Plugins to load before mounting the App
    */
   plugins: [
-    { src: '~/plugins/apolloMixins', ssr: false },
+    { src: '~/plugins/apolloMixins', ssr: true },
     { src: '~/plugins/nossr', ssr: false },
     { src: '~/plugins/universal' },
     { src: '~/plugins/analytics', ssr: false }
@@ -143,6 +146,25 @@ export default {
     linkExactActiveClass: 'exact-active-link'
   },
 
+  hooks: {
+    generate: {
+      async before(nuxt, generateOptions) {
+        const LocalStorage = require('node-localstorage').LocalStorage
+        const localStorage = new LocalStorage('./scratch')
+        const cache = new InMemoryCache()
+
+        localStorage.clear()
+
+        process.___cache = cache
+
+        await persistCache({
+          cache,
+          storage: localStorage
+        })
+      }
+    }
+  },
+
   generate: {
     interval: 800,
     exclude: [/^(?=.*\bedit\b).*$/, /^(?=.*\bmanage\b).*$/],
@@ -152,12 +174,16 @@ export default {
       const rIdx = process.argv.indexOf('-r')
       if (rIdx !== -1) {
         // it will never be 0 as that would be the node/nuxt command
-        return [process.argv[rIdx + 1]]
+        const routes = process.argv[rIdx + 1].split(',')
+        return routes
       }
-      // return default / all routes
-      const routes = await createRoutes()
 
-      return routes
+      const result = await axios.post(apiUrl, {
+        query: 'query{routes(postLimit: 8, archiveLimit: 5, tagLimit: 8)}'
+      })
+
+      // return default / all routes
+      return result.data.data.routes
     }
   }
 }

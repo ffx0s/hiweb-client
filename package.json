@@ -28,10 +28,12 @@
   "dependencies": {
     "@nuxtjs/apollo": "^4.0.0-rc19",
     "@nuxtjs/axios": "^5.9.0",
+    "apollo-cache-persist": "^0.1.1",
     "graphql-tag": "^2.10.1",
     "js-cookie": "^2.2.1",
     "lvan": "^0.1.6",
     "minireset.css": "^0.0.6",
+    "node-localstorage": "^2.1.5",
     "nuxt": "2.11.0",
     "prismjs": "^1.17.1",
     "timeago.js": "^4.0.1",

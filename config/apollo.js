@@ -18,11 +18,16 @@ export default function(context) {
     }
     // if (networkError) console.log(`[Network error]: ${networkError}`)
   })
+
   return {
     link,
+    cache: process.___cache,
     httpEndpoint: apiUrl,
     httpLinkOptions: {
-      credentials: 'include'
+      credentials: 'include',
+      headers: process.env.LIMITER_TICKET
+        ? { 'Limiter-Ticket': process.env.LIMITER_TICKET }
+        : {}
     }
   }
 }

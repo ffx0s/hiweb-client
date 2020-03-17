@@ -22,7 +22,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       
       - name: Nuxt generate
-        run: npm run generate
+        run: LIMITER_TICKET=$(echo -n '${{secrets.PASSWORD}}' | md5sum | awk '{printf $1}') npm run generate
 
       - name: Upyun login
         uses: ffx0s/upx-actions@master
