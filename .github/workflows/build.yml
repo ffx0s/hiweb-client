@@ -1,6 +1,6 @@
 name: generate static page
 
-on: [repository_dispatch, push]
+on: [repository_dispatch]
 
 jobs:
   build:
