@@ -60,6 +60,7 @@ body.custom-scrollbar {
   margin-right: auto;
   padding-left: var(--gap);
   padding-right: var(--gap);
+  color: var(--textPrimary);
 }
 
 .box {
