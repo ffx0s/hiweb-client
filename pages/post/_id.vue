@@ -25,7 +25,7 @@
       </li>
     </ul>
 
-    <Comment />
+    <Comment :typeId="$route.params.id" type="POST" />
 
     <Auth :showError="false">
       <Toolbar>

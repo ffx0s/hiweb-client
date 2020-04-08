@@ -50,6 +50,7 @@ export default {
     VButton,
     VTextarea
   },
+  inject: ['type', 'typeId'],
   props: {
     me: {
       type: Object,
@@ -64,8 +65,8 @@ export default {
   data() {
     return {
       form: {
-        type: 'POST',
-        typeId: this.$route.params.id,
+        type: this.type,
+        typeId: this.typeId,
         content: '',
         parentId: null,
         to: null
@@ -117,9 +118,8 @@ export default {
           return cacheData
         })
       } else {
-        // 回复数
         let replyCount = 0
-        // 更新评论列表的回复数
+        // 更新回复数
         this.commonUpdate(store, { typeId: this.form.typeId }, (cacheData) => {
           const comment = cacheData.comments.docs.find(
             (item) => this.form.parentId === item.id
@@ -144,6 +144,8 @@ export default {
                   offset: 0,
                   total: 1,
                   limit: 10,
+                  page: null,
+                  pages: null,
                   __typename: 'CommentConnection'
                 }
               }

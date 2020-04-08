@@ -89,6 +89,7 @@ export default {
     Avatar,
     VButton
   },
+  inject: ['type'],
   props: {
     data: {
       type: Object,
@@ -111,7 +112,7 @@ export default {
           offset: 0,
           limit: 20,
           sort: 1,
-          type: 'POST',
+          type: this.type,
           parentId: this.data.id
         }
       },
