@@ -58,7 +58,9 @@
           存档
         </nuxt-link>
         <!-- <a :class="$style.navItem" href="#">工具箱</a> -->
-        <!-- <a :class="$style.navItem" href="#">关于</a> -->
+        <nuxt-link :class="$style.navItem" to="/about/">
+          关于
+        </nuxt-link>
         <Auth
           :showError="false"
           :class="$style.navItem"
