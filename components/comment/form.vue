@@ -92,7 +92,7 @@ export default {
     commonUpdate(store, variablesOptions, update) {
       const query = require('@/graphql/comments')
       const variables = {
-        type: 'POST',
+        type: this.type,
         ...variablesOptions
       }
       const data = store.readQuery({ query, variables })

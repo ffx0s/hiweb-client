@@ -95,7 +95,7 @@ export default {
       variables() {
         return {
           limit,
-          type: 'POST',
+          type: this.type,
           typeId: this.typeId,
           offset: initOffset
         }
