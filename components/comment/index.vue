@@ -71,6 +71,22 @@ export default {
     CommentForm,
     InfiniteScroll
   },
+  provide() {
+    return {
+      type: this.type,
+      typeId: this.typeId
+    }
+  },
+  props: {
+    type: {
+      type: String,
+      required: true
+    },
+    typeId: {
+      type: String,
+      required: true
+    }
+  },
   apollo: {
     comments: {
       // 网络改变时也需要更新loading状态
@@ -80,7 +96,7 @@ export default {
         return {
           limit,
           type: 'POST',
-          typeId: this.postId,
+          typeId: this.typeId,
           offset: initOffset
         }
       },
@@ -100,7 +116,6 @@ export default {
   },
   data() {
     return {
-      postId: this.$route.params.id,
       offset: initOffset,
       skipQuery: true,
       failed: false,
