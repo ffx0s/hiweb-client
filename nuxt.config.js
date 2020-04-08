@@ -69,8 +69,8 @@ export default {
     [
       'nuxt-payload-extractor',
       {
-        blacklist: ['/edit', '/manage', '/404']
-        // versioning: true
+        blacklist: ['/edit', '/manage', '/404'],
+        versioning: false
       }
     ]
   ],
