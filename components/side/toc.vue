@@ -30,44 +30,31 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
 import Box from './box'
 import { listToTree } from '@/utils/editor'
-
-const TOCS_QUERY = gql`
-  query {
-    tocs
-  }
-`
 
 export default {
   components: {
     Box
   },
-  data() {
-    return {
-      tocs: [],
-      toggle: false,
-      skip: true
+  props: {
+    tocs: {
+      type: Array,
+      default: () => []
     }
   },
-  apollo: {
-    tocs: {
-      fetchPolicy: 'cache-only',
-      query: TOCS_QUERY,
-      skip() {
-        return this.skip
-      }
+  data() {
+    return {
+      toggle: false
     }
   },
   computed: {
     tree() {
       // 因为 tocs 第一个是标题，需要去掉标题
-      return this.tocs ? listToTree(this.tocs.slice(1, this.tocs.length)) : []
+      return this.tocs.length > 1
+        ? listToTree(this.tocs.slice(1, this.tocs.length))
+        : []
     }
-  },
-  mounted() {
-    this.skip = false
   }
 }
 </script>
@@ -77,6 +64,7 @@ export default {
   --tocButtonSize: 35px;
   position: sticky;
   top: var(--gap);
+  margin-top: var(--gap);
 }
 .toggle {
   display: none;

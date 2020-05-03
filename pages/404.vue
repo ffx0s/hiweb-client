@@ -1,8 +1,6 @@
 <template>
   <!-- 主要提供给 CDN 404 页面 -->
-  <div>
-    <Error :error="{ statusCode: 404 }" />
-  </div>
+  <Error :error="{ statusCode: 404 }" />
 </template>
 
 <script>

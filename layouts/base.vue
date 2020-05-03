@@ -1,13 +1,8 @@
 <template>
   <div class="layout">
-    <AppHeader :class="$style.postHeader" />
-    <div class="wrapper columns">
-      <div class="column1">
-        <nuxt class="main" />
-      </div>
-      <div class="column2">
-        <Toc />
-      </div>
+    <AppHeader :class="$style.header" />
+    <div class="wrapper">
+      <nuxt />
     </div>
     <client-only>
       <BackToTop v-if="!isMobile" />
@@ -18,13 +13,11 @@
 <script>
 import BackToTop from 'lvan/backToTop/index.vue'
 import AppHeader from '@/components/header/index2'
-import Toc from '@/components/side/toc'
 
 export default {
   components: {
     BackToTop,
-    AppHeader,
-    Toc
+    AppHeader
   },
   data() {
     return {
@@ -39,7 +32,7 @@ export default {
 
 <style lang="postcss" module>
 @media (max-width: 414px) {
-  .postHeader {
+  .header {
     display: none;
   }
 }

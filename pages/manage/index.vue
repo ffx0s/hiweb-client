@@ -103,7 +103,7 @@ function getValue(obj, key) {
 }
 
 export default {
-  layout: 'manage',
+  layout: 'base',
   components: {
     Auth,
     Dropdown,
@@ -312,6 +312,9 @@ export default {
 
 <style lang="postcss" module>
 .manage {
+  width: 100%;
+  min-height: 100vh;
+  margin: var(--gap) 0;
   padding: var(--gap);
   color: var(--textPrimary);
 }

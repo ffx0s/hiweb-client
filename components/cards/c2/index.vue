@@ -113,7 +113,7 @@ export default {
   color: var(--textRegular);
 }
 
-@media (max-width: 414px) {
+@media (max-width: 425px) {
   .card {
     border-bottom: 1px solid var(--background);
   }

@@ -70,8 +70,8 @@ body.custom-scrollbar {
 }
 
 .columns {
-  padding-top: var(--gap);
-  padding-bottom: var(--gap);
+  margin-top: var(--gap);
+  margin-bottom: var(--gap);
   display: flex;
   min-height: 100vh;
 }
@@ -89,13 +89,17 @@ body.custom-scrollbar {
 
 .main {
   height: 100%;
-  /* width: 100%; */
+  width: 100%;
   /* background-color: var(--background); */
 }
 
 @media (max-width: 1000px) {
   .columns {
     flex-direction: column;
+  }
+
+  .column1 {
+    flex: none;
   }
 
   .column2 {
@@ -107,16 +111,14 @@ body.custom-scrollbar {
 
 @media (max-width: 414px) {
   .wrapper {
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
+    padding-left: 0;
+    padding-right: 0;
   }
   .box {
     border-radius: 0;
   }
-  .layout .columns {
-    padding-top: 0;
-    padding-left: 0;
-    padding-right: 0;
+  .columns {
+    margin-top: 0;
   }
 }
 
