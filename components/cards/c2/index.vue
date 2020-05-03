@@ -124,5 +124,8 @@ export default {
   .right {
     margin-right: 1.375rem;
   }
+  .summary {
+    display: none;
+  }
 }
 </style>

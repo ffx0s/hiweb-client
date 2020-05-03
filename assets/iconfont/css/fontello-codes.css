@@ -11,8 +11,7 @@
 .icon-edit:before { content: '\e809'; } /* '' */
 .icon-floppy:before { content: '\e80a'; } /* '' */
 .icon-cancel:before { content: '\e80b'; } /* '' */
-.icon-moon:before { content: '\e80c'; } /* '' */
-.icon-sun-inv:before { content: '\e80d'; } /* '' */
+.icon-home-outline:before { content: '\e80c'; } /* '' */
 .icon-github-circled:before { content: '\f09b'; } /* '' */
 .icon-upload-cloud:before { content: '\f0ee'; } /* '' */
 .icon-angle-down:before { content: '\f107'; } /* '' */

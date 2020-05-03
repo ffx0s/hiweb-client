@@ -77,7 +77,6 @@ export default {
   --tocButtonSize: 35px;
   position: sticky;
   top: var(--gap);
-  margin-top: var(--gap);
 }
 .toggle {
   display: none;
@@ -128,16 +127,15 @@ export default {
   }
   .toggle {
     display: block;
-    position: absolute;
-    top: 50%;
-    margin-top: calc(var(--tocButtonSize) / -2);
+    position: fixed;
+    bottom: 25%;
     left: calc(var(--tocButtonSize) * -1);
     width: var(--tocButtonSize);
     height: var(--tocButtonSize);
     line-height: var(--tocButtonSize);
     text-align: center;
     color: var(--textRegular);
-    background-color: var(--background);
+    background-color: white;
     font-size: 16px;
     border-radius: 4px 0 0px 4px;
     box-shadow: -4px 0px 6px rgba(0, 0, 0, 0.05);

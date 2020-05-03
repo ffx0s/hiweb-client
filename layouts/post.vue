@@ -1,19 +1,14 @@
 <template>
   <div class="layout">
-    <AppHeader />
+    <AppHeader :class="$style.postHeader" />
     <div class="wrapper columns">
       <div class="column1">
         <nuxt class="main" />
       </div>
       <div class="column2">
-        <div class="box">
-          <Category />
-          <Archive />
-          <Tag />
-        </div>
+        <Toc />
       </div>
     </div>
-    <AppFooter />
     <client-only>
       <BackToTop v-if="!isMobile" />
     </client-only>
@@ -23,19 +18,13 @@
 <script>
 import BackToTop from 'lvan/backToTop/index.vue'
 import AppHeader from '@/components/header/index2'
-import AppFooter from '@/components/footer'
-import Category from '@/components/side/category'
-import Archive from '@/components/side/archive'
-import Tag from '@/components/side/tag'
+import Toc from '@/components/side/toc'
 
 export default {
   components: {
     BackToTop,
     AppHeader,
-    AppFooter,
-    Category,
-    Archive,
-    Tag
+    Toc
   },
   data() {
     return {
@@ -47,3 +36,11 @@ export default {
   }
 }
 </script>
+
+<style lang="postcss" module>
+@media (max-width: 414px) {
+  .postHeader {
+    display: none;
+  }
+}
+</style>
