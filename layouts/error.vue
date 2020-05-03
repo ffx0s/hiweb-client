@@ -54,7 +54,8 @@ export default {
 
 <style lang="postcss">
 .__error-page {
-  height: 80vh;
+  width: 100%;
+  min-height: 70vh;
   text-align: center;
   display: flex;
   justify-content: center;

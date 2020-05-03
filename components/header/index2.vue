@@ -269,6 +269,12 @@ export default {
     order: 0;
   }
 }
+@media (max-width: 414px) {
+  .inner {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+}
 @media (max-width: 320px) {
   .input {
     width: 13rem;
