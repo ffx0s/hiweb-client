@@ -2,7 +2,9 @@
   <div>
     <Card :data="post" />
 
-    <ul :class="[$style.next, 'row-between']">
+    <Comment :typeId="$route.params.id" type="POST" />
+
+    <ul :class="[$style.next, 'row-between', 'box']">
       <li v-if="adjacentPosts.prev" :class="[$style.item, 'text-hidden']">
         <span class="v-text-primary">上一篇：</span>
         <nuxt-link
@@ -24,8 +26,6 @@
         </nuxt-link>
       </li>
     </ul>
-
-    <Comment :typeId="$route.params.id" type="POST" />
 
     <Auth :showError="false">
       <Toolbar>
@@ -85,6 +85,7 @@ const postQuery = gql`
 `
 
 export default {
+  layout: 'post',
   components: {
     Card,
     Comment,
@@ -176,7 +177,7 @@ export default {
 
 <style lang="postcss" module>
 .next {
-  padding: 0;
+  padding: var(--gap);
   margin: var(--gap) 0;
   text-align: left;
 }
@@ -190,7 +191,7 @@ export default {
 }
 @media (max-width: 414px) {
   .next {
-    margin: 20px 10px;
+    margin: 20px 0;
     flex-direction: column;
   }
   .item {

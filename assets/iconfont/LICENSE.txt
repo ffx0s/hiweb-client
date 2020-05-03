@@ -1,6 +1,15 @@
 Font license info
 
 
+## Font Awesome
+
+   Copyright (C) 2016 by Dave Gandy
+
+   Author:    Dave Gandy
+   License:   SIL ()
+   Homepage:  http://fortawesome.github.com/Font-Awesome/
+
+
 ## Entypo
 
    Copyright (C) 2012 by Daniel Bruce
@@ -10,12 +19,12 @@ Font license info
    Homepage:  http://www.entypo.com
 
 
-## Meteocons
+## Typicons
 
-   Copyright (C) 2012 by Alessio Atzeni
+   (c) Stephen Hutchings 2012
 
-   Author:    Alessio Atzeni
+   Author:    Stephen Hutchings
    License:   SIL (http://scripts.sil.org/OFL)
-   Homepage:  http://www.alessioatzeni.com
+   Homepage:  http://typicons.com/
 
 

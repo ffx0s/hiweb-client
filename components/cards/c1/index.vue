@@ -7,6 +7,13 @@
           <img :class="$style.image" v-lazy="data.poster" />
         </client-only>
       </component>
+
+      <nuxt-link
+        :class="$style.homeLink"
+        class="icon-home-outline"
+        to="/"
+        active-class=""
+      />
     </div>
 
     <div :class="$style.content">

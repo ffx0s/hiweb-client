@@ -183,6 +183,7 @@ export default {
 <style lang="postcss" module>
 .comment {
   min-height: 270px;
+  margin-top: var(--gap);
   padding: 0 18px 18px;
 }
 .header {

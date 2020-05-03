@@ -43,7 +43,7 @@ body.custom-scrollbar {
     background-color: var(--lightGray);
   }
   &::-webkit-scrollbar-thumb {
-    background-color: var(--textRegular);
+    background-color: #b5b5b5;
     border-radius: 20px;
   }
 }
@@ -69,6 +69,57 @@ body.custom-scrollbar {
   /* box-shadow: var(--shadow); */
 }
 
+.columns {
+  padding-top: var(--gap);
+  padding-bottom: var(--gap);
+  display: flex;
+  min-height: 100vh;
+}
+
+.column1 {
+  position: relative;
+  flex: 1;
+  min-width: 300px;
+}
+
+.column2 {
+  margin-left: var(--gap);
+  width: var(--sideWidth);
+}
+
+.main {
+  height: 100%;
+  /* width: 100%; */
+  /* background-color: var(--background); */
+}
+
+@media (max-width: 1000px) {
+  .columns {
+    flex-direction: column;
+  }
+
+  .column2 {
+    margin-top: var(--gap);
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+@media (max-width: 414px) {
+  .wrapper {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+  .box {
+    border-radius: 0;
+  }
+  .layout .columns {
+    padding-top: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
 .theme-icon {
   position: absolute;
   right: -15px;
@@ -84,16 +135,6 @@ body.custom-scrollbar {
   }
   &.icon-moon {
     color: var(--border);
-  }
-}
-
-@media (max-width: 414px) {
-  .wrapper {
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
-  }
-  .box {
-    border-radius: 0;
   }
 }
 
