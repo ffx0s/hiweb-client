@@ -43,6 +43,8 @@ export default {
     if (me) {
       this.isAdmin = me.role >= 1
       this.$emit('auth', this.isAdmin)
+    } else {
+      this.isAdmin = false
     }
   }
 }
