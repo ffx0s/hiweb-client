@@ -4,7 +4,10 @@
       粤ICP备15009058号-1
     </a>
     &nbsp;&nbsp;Copyright © 2016-{{ date }}
-    <a href="https://www.upyun.com/" target="_blank">
+    <a
+      href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral"
+      target="_blank"
+    >
       <img
         src="https://static.webfed.cn/FhE1nMKn4F-CKlMhoyMqvHSDEUMz"
         style="margin-left: 10px;width: 50px;"
