@@ -1,5 +1,5 @@
 <template>
-  <div :class="[$style.card, 'box']">
+  <div :class="$style.card">
     <div :class="$style.header" v-if="data.poster">
       <!-- eslint-disable-next-line vue/require-component-is -->
       <component :is="tag" :class="$style.imageLink" :to="to">
@@ -7,13 +7,6 @@
           <img :class="$style.image" v-lazy="data.poster" />
         </client-only>
       </component>
-
-      <nuxt-link
-        :class="$style.homeLink"
-        class="icon-home-outline"
-        to="/"
-        active-class=""
-      />
     </div>
 
     <div :class="$style.content">
@@ -22,7 +15,7 @@
           <i class="icon-clock"></i>
           {{ data.created | ago }}
         </span>
-        &nbsp;
+        <!-- category -->
         <nuxt-link
           :class="$style.tag"
           :to="'/category/' + data.category.name + '/'"
@@ -31,7 +24,7 @@
           <i class="icon-th-large"></i>
           {{ data.category.name }}
         </nuxt-link>
-        &nbsp;
+        <!-- tag -->
         <nuxt-link
           v-for="tagItem in data.tags"
           :key="tagItem"
@@ -70,7 +63,7 @@
 </template>
 
 <script>
-import ImageViewer from 'lvan/imageViewer/index.vue'
+import ImageViewer from 'lvan/imageViewer'
 
 export default {
   components: {

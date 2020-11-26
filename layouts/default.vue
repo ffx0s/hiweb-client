@@ -1,49 +1,46 @@
 <template>
-  <div class="layout">
-    <AppHeader />
-    <div class="wrapper columns">
-      <div class="column1">
-        <nuxt class="main" />
-      </div>
-      <div class="column2">
-        <div class="box">
-          <Category />
-          <Archive />
-          <Tag />
+  <div>
+    <div class="layout">
+      <AppHeader />
+      <div class="wrapper columns">
+        <div class="container">
+          <AnimatedRoute router-view-class="main" />
+        </div>
+        <div :class="{ active: leftSideActive }" class="left-side">
+          <div class="left-side__scroll">
+            <Tools />
+          </div>
+          <div
+            @click="leftSideActive = !leftSideActive"
+            class="left-side__toggle"
+          >
+            <i class="icon-right-open-big"></i>
+          </div>
+          <div @click="leftSideActive = false" class="left-side__layer"></div>
         </div>
       </div>
     </div>
-    <AppFooter />
-    <client-only>
-      <BackToTop v-if="!isMobile" />
-    </client-only>
+    <Drawer />
   </div>
 </template>
 
 <script>
-import BackToTop from 'lvan/backToTop/index.vue'
-import AppHeader from '@/components/header/index2'
-import AppFooter from '@/components/footer'
-import Category from '@/components/side/category'
-import Archive from '@/components/side/archive'
-import Tag from '@/components/side/tag'
+import AnimatedRoute from 'lvan/route/nuxt'
+import AppHeader from '@/components/header'
+import Tools from '@/components/side/tools'
+import Drawer from '@/components/drawer'
 
 export default {
   components: {
-    BackToTop,
+    AnimatedRoute,
     AppHeader,
-    AppFooter,
-    Category,
-    Archive,
-    Tag
+    Tools,
+    Drawer
   },
   data() {
     return {
-      isMobile: false
+      leftSideActive: false
     }
-  },
-  mounted() {
-    this.isMobile = 'ontouchstart' in document
   }
 }
 </script>

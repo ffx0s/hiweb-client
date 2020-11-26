@@ -109,7 +109,7 @@ export default {
   top: 100%;
   box-shadow: 1px 2px 15px rgba(0, 0, 0, 0.05);
   z-index: 99;
-  background-color: var(--themeBackground);
+  background-color: var(--lightBackground);
   opacity: 0;
   visibility: hidden;
   transform: translateY(10px);

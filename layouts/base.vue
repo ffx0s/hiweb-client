@@ -1,6 +1,6 @@
 <template>
-  <div class="layout">
-    <AppHeader :class="$style.header" />
+  <div>
+    <AppHeader />
     <div class="wrapper">
       <nuxt />
     </div>
@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import BackToTop from 'lvan/backToTop/index.vue'
-import AppHeader from '@/components/header/index2'
+import BackToTop from 'lvan/backToTop'
+import AppHeader from '@/components/header'
 
 export default {
   components: {
@@ -30,10 +30,4 @@ export default {
 }
 </script>
 
-<style lang="postcss" module>
-@media (max-width: 414px) {
-  .header {
-    display: none;
-  }
-}
-</style>
+<style lang="postcss" module></style>

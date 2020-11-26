@@ -17,7 +17,7 @@
 
 <script>
 import gql from 'graphql-tag'
-import Box from './box'
+import Box from '@/components/box'
 import { formatDate } from '@/utils/filters'
 
 export default {
@@ -61,16 +61,15 @@ export default {
 <style lang="postcss" module>
 .item {
   display: flex;
-  padding: 7px 10px;
+  padding: 7px 0;
   font-size: 14px;
   border-radius: 2px;
-  color: var(--textRegular);
+  color: var(--textPrimary);
   align-items: center;
   justify-content: space-between;
-  transition: 0.3s;
+  transition: color 0.3s;
   &:hover {
-    color: var(--textRegular);
-    background-color: var(--background);
+    color: var(--primary);
   }
   & .num {
     padding: 0 5px;

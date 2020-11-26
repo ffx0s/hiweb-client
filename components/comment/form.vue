@@ -40,8 +40,8 @@
 </template>
 
 <script>
-import VButton from 'lvan/button/index.vue'
-import VTextarea from 'lvan/textarea/index.vue'
+import VButton from 'lvan/button'
+import VTextarea from 'lvan/textarea'
 import Avatar from '../avatar'
 
 export default {
@@ -181,7 +181,7 @@ export default {
   min-height: 80px;
   outline: none;
   resize: none;
-  transition: background 0.3s;
+  transition: 0.3s;
   color: var(--textPrimary);
   border-radius: 4px;
   border: 1px solid var(--lightGray);
@@ -190,7 +190,7 @@ export default {
   resize: none;
   &:focus {
     color: var(--textPrimary);
-    background-color: var(--themeBackground);
+    border: 1px solid var(--primary);
   }
   &.replyState {
     padding-top: 35px;
@@ -205,7 +205,7 @@ export default {
   padding: 4px;
   font-size: 12px;
   color: var(--textRegular);
-  background-color: var(--themeBackground);
+  background-color: var(--lightBackground);
   border: 1px solid var(--lightGray);
   border-radius: 4px;
   line-height: 0;

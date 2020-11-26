@@ -364,13 +364,28 @@ ul.pagination {
       color: var(--textPrimary);
       transition: 0.3s;
       border-radius: 4px;
-      background-color: var(--themeBackground);
+      background-color: var(--lightBackground);
       outline: none;
+      overflow: hidden;
     }
-    & a:hover {
+  }
+}
+
+@media (hover: hover) {
+  .pagination a {
+    &:hover {
       color: #fff;
       background-color: var(--primary);
       opacity: 0.7;
+    }
+  }
+}
+
+@media (hover: none) {
+  .pagination a {
+    &:active {
+      color: #fff;
+      background-color: var(--primary);
     }
   }
 }

@@ -10,6 +10,10 @@
   display: flex;
 }
 
+.flex1 {
+  flex: 1;
+}
+
 .flex-row {
   display: flex;
   flex-direction: row;
@@ -55,6 +59,14 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+
+.font14 {
+  font-size: 14px;
+}
+
+.font16 {
+  font-size: 16px;
 }
 
 .clear:after {
@@ -115,4 +127,11 @@ img[lazy="error"] {
 }
 .list-leave-active {
   position: absolute;
+}
+
+.gap-margin-top {
+  margin-top: var(--gap);
+}
+.gap-margin-bottom {
+  margin-bottom: var(--gap);
 }

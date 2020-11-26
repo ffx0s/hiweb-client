@@ -27,7 +27,7 @@
           <i class="icon-th-large"></i>
           {{ data.category.name }}
         </nuxt-link>
-        <nuxt-link
+        <!-- <nuxt-link
           v-for="tagItem in data.tags"
           :key="tagItem"
           :class="$style.tag"
@@ -36,7 +36,7 @@
         >
           <i class="icon-tag"></i>
           {{ tagItem }}
-        </nuxt-link>
+        </nuxt-link> -->
       </div>
     </div>
   </div>
@@ -68,19 +68,21 @@ export default {
 <style lang="postcss" module>
 .card {
   display: flex;
-  padding: 1.25rem;
+  padding: var(--gap);
 }
 .left {
   width: 7.75rem;
   height: 5.375rem;
   margin-right: 1.375rem;
+  /* 缓解 safari 懒加载图片滚动到顶部或顶部页面抖动问题 */
+  overflow: hidden;
 }
 .right {
   flex: 1;
 }
 .imageLink {
   display: block;
-  background-color: var(--background);
+  background-color: var(--lightBackgroundActive);
   border-radius: 4px;
   height: 100%;
 }
@@ -99,17 +101,17 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
 }
 .info {
   margin-top: 1rem;
-  font-size: 0.75rem;
+  font-size: 12px;
   color: var(--textRegular);
   line-height: 16px;
 }
 .tag {
-  margin-left: 4px;
+  margin-left: 6px;
   color: var(--textRegular);
 }
 

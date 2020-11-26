@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div :class="$style.title">
+  <div :class="[{ [$style.fill]: fill }, $style.box]">
+    <div :class="[$style.title, { [$style.bigTitle]: bigTitle }]">
       <slot name="title" />
       <span>{{ title }}</span>
       <nuxt-link
@@ -30,42 +30,45 @@ export default {
       type: String,
       default: ''
     },
-    sticky: {
-      type: Boolean,
-      default: false
-    },
     contentClass: {
       type: String,
       default: ''
+    },
+    fill: {
+      type: Boolean,
+      default: false
+    },
+    bigTitle: {
+      type: Boolean,
+      default: false
     }
   }
 }
 </script>
 
 <style lang="postcss" module>
+.box {
+  padding: var(--gap);
+}
 .title {
   position: relative;
   display: flex;
   align-items: center;
-  padding: 15px 22px 0;
   font-size: 18px;
   color: var(--textPrimary);
   justify-content: space-between;
-  &:before {
-    content: '';
-    position: absolute;
-    top: 15px;
-    left: 0;
-    width: 7px;
-    height: 25px;
-    background-color: var(--background);
-  }
 }
 .content {
-  padding: 10px var(--gap) 20px;
+  padding-top: 15px;
 }
 .link {
   color: var(--textPrimary);
   font-size: 12px;
+}
+.fill {
+  min-height: 85vh;
+}
+.bigTitle {
+  font-size: 22px;
 }
 </style>

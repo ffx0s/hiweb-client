@@ -1,17 +1,25 @@
 <template>
   <div :class="$style.autocomplete">
-    <slot :input="input" name="input">
+    <slot
+      :input="input"
+      :keyup="keyup"
+      :focus="focus"
+      :blur="blur"
+      name="input"
+    >
       <input
         v-bind="$attrs"
         @input="input"
-        @blur="$emit('blur', $event)"
+        @keyup="keyup"
+        @focus="focus"
+        @blur="blur"
         v-model="currentValue"
         :class="inputClass || $style.inputClass"
         type="text"
       />
     </slot>
 
-    <div :class="[$style.content, show && $style.show]">
+    <div :class="[$style.content, show && $style.show, listClass]">
       <div :class="[$style.status, 'v-text-regular']" v-if="loading">
         <Loading size="18" />
       </div>
@@ -29,7 +37,7 @@
           <li
             v-for="(item, i) in list"
             :key="i"
-            :class="$style.item"
+            :class="[$style.item, index === i && $style.active]"
             @click="select(item, i)"
           >
             {{ item.value }}
@@ -41,7 +49,7 @@
 </template>
 
 <script>
-import Loading from 'lvan/loading/index.vue'
+import Loading from 'lvan/loading'
 
 export default {
   components: {
@@ -60,6 +68,10 @@ export default {
     delay: {
       type: Number,
       default: 300
+    },
+    listClass: {
+      type: String,
+      default: ''
     }
   },
   data() {
@@ -67,7 +79,8 @@ export default {
       show: false,
       errorMessage: '',
       loading: false,
-      list: []
+      list: [],
+      index: null
     }
   },
   computed: {
@@ -83,12 +96,6 @@ export default {
       return !this.list.length
     }
   },
-  mounted() {
-    document.addEventListener('click', this.close)
-  },
-  beforeDestroy() {
-    document.removeEventListener('click', this.close)
-  },
   methods: {
     input(event) {
       clearTimeout(this.inputTimer)
@@ -99,9 +106,36 @@ export default {
           this.show = true
           this.$emit('search', event.target.value, this.callback)
         } else {
-          this.close()
+          this.show = false
         }
       }, this.delay)
+    },
+    keyup(event) {
+      const length = this.list.length
+
+      if (length && this.show) {
+        let index = this.index
+
+        switch (event.keyCode) {
+          // up
+          case 38:
+            index--
+            if (index < 0) index = length - 1
+            this.index = index
+            break
+          // down
+          case 40:
+            index++
+            index %= length
+            this.index = index
+            break
+          // enter
+          case 13:
+            this.select(this.list[index], index)
+            this.show = false
+            break
+        }
+      }
     },
     select(item, i) {
       this.$emit('select', item, i)
@@ -111,14 +145,24 @@ export default {
       if (error) {
         this.errorMessage = error.message
       } else {
+        if (result.length) {
+          this.index = 0
+        }
         this.errorMessage = ''
         this.list = result
       }
       this.loading = false
       this.show = true
     },
-    close() {
+    focus(event) {
+      if (event.target.value.trim()) {
+        this.show = true
+      }
+      this.$emit('focus', event)
+    },
+    blur(event) {
       this.show = false
+      this.$emit('blur', event)
     }
   }
 }
@@ -130,6 +174,7 @@ export default {
 }
 .content {
   position: absolute;
+  right: 0;
   z-index: 5;
   width: 100%;
   opacity: 0;
@@ -137,7 +182,7 @@ export default {
   transform: translateY(10px);
   transition: 0.3s;
   box-shadow: var(--shadow);
-  background-color: var(--themeBackground);
+  background-color: var(--lightBackground);
   border-radius: 4px;
 }
 .show {
@@ -147,22 +192,25 @@ export default {
 }
 .list {
   margin: 0;
-  padding: 0;
+  padding: 10px 0;
   list-style: none;
 }
 .item {
-  padding: 5px 8px;
-  font-size: 13px;
+  padding: 8px 16px;
+  font-size: 16px;
   cursor: pointer;
   color: var(--textPrimary);
-  transition: background 0.3s;
+  transition: color 0.3s;
   &:hover {
-    background-color: var(--background);
+    color: var(--primary);
+  }
+  &.active {
+    background-color: var(--lightBackgroundActive);
   }
 }
 .status {
-  padding: 5px 8px;
-  font-size: 12px;
+  padding: 10px 16px;
+  font-size: 16px;
   white-space: nowrap;
 }
 </style>

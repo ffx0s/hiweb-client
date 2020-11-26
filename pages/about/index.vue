@@ -1,46 +1,40 @@
 <template>
   <div>
-    <div :class="$style.about" class="markdown-body box">
+    <div :class="$style.about" class="markdown-body">
       <h2>关于我</h2>
-      <p>
-        console.success("喜欢前端并从事着前端开发工作 😊")
-      </p>
-      <p>
-        console.error("买了很多书，却不怎么去看 😢")
-      </p>
-      <p>
-        console.debug("为今朝写的一手好代码沾沾自喜，来日回头看却默默流泪 💔")
-      </p>
+      <p>Not Found</p>
       <h2>关于本站</h2>
       <p>
-        网站的前端页面是基于 Vue 开发的单页应用（前端后端分离），主要用了 Nuxt
-        和 Graphql（数据获取），通过 Nuxt Generate
-        功能生成静态化页面。静态化后数据的获取和渲染不依赖于服务器。
+        前端（Vue、Nuxt）：通过 Graphql 获取数据，利用 Nuxt Generate
+        功能生成不依赖服务器的纯静态化页面。
       </p>
       <p>
-        后端基于 Node + Express，使用 Graphql 对外提供数据查询接口，使用 Mongodb
-        + Redis 存储数据和会话，开发环境下使用 Typescript 编写代码，使用 Docker
-        + Github Actions 实现自动构建和部署。
+        后端（Node、Express、Typescript），使用 Graphql
+        对外提供数据查询接口，Mongodb + Redis 存储数据和会话，使用 Docker +
+        Github Actions 实现自动构建和部署。
       </p>
-      <h3>功能特点</h3>
+      <h3>功能</h3>
       <ol>
+        <li>页面纯静态化，通过后台管理在线部署打包应用。</li>
         <li>Blog 基础功能（登录注册、文章、标签、分类、留言、存档等）。</li>
         <li>
-          集成了 Markdown 编辑器：Marktext Muya，让编辑文档时可视化。
+          文章内容可视化编辑。
         </li>
         <li>
-          自动化构建打包，使用 github actions
-          自动化构建打包应用，并上传到云存储。
+          自动化构建打包，Github Actions 构建应用，内容自动上传到云存储。
+        </li>
+        <li>
+          页面响应式布局，支持移动端和PC端。
         </li>
       </ol>
-      <h3>代码仓库</h3>
+      <h3>源码</h3>
       <p>
         <a href="https://github.com/ffx0s/hiweb-client" target="__blank">
-          前端应用
+          前端
         </a>
         &nbsp;
         <a href="https://github.com/ffx0s/hiweb-server" target="__blank">
-          后端服务
+          后端
         </a>
       </p>
     </div>
@@ -50,12 +44,14 @@
 </template>
 
 <script>
+import { transition } from '@/plugins/transition'
 import Comment from '@/components/comment'
 
 export default {
   components: {
     Comment
   },
+  transition,
   head() {
     return {
       title: '关于 | hiweb',

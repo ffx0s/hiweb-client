@@ -6,7 +6,7 @@
 
 <script>
 import gql from 'graphql-tag'
-import Box from './box'
+import Box from '@/components/box'
 import Tags from '@/components/tags'
 
 const TAGS_QUERY = gql`

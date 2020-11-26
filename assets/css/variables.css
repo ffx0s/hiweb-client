@@ -15,10 +15,11 @@
   --textSecondary: #d9d9d9;
   /* 边框 */
   --border: #d9d9d9;
-  /* 背景色 */
-  --background: #f6f6f6;
-  /* 主题背景 */
-  --themeBackground: #ffffff;
+  /* 主背景色 */
+  --background: #ffffff;
+  /* 浅色背景 */
+  --lightBackground: #ffffff;
+  --lightBackgroundActive: #f6f6f6;
   /* 浅灰 */
   --lightGray: #e5e5e5;
   /* 阴影 */
@@ -26,9 +27,15 @@
   /* 通用间距 */
   --gap: 1.2rem;
   /* 侧栏宽度 */
-  --sideWidth: 260px;
+  --sideWidth: 240px;
   /* 应用最大宽度 */
   --wrapWdith: 1200px;
+  /* 页面头部高度 */
+  --headerHeight: 54px;
   /* code background */
   --codeBackground: #f6f6f6;
+  /* 滚动条宽度 */
+  --scrollbarWidth: 5px;
+  /* 滚动条颜色 */
+  --scrollbarColor: #c9c9c9;
 }

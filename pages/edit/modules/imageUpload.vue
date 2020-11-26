@@ -63,8 +63,8 @@
 </template>
 
 <script>
-import Upload from 'lvan/upload/index.vue'
-import VButton from 'lvan/button/index.vue'
+import Upload from 'lvan/upload'
+import VButton from 'lvan/button'
 import gql from 'graphql-tag'
 import { uploadUrl } from '@/config'
 

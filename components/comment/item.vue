@@ -80,7 +80,7 @@
 </template>
 
 <script>
-import VButton from 'lvan/button/index.vue'
+import VButton from 'lvan/button'
 import Avatar from '../avatar'
 
 export default {
@@ -160,7 +160,6 @@ export default {
   display: flex;
   margin-bottom: var(--gap);
   color: var(--textPrimary);
-  background-color: var(--themeBackground);
   & .item {
     padding-bottom: 14px;
     margin-bottom: 0;

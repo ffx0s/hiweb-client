@@ -51,7 +51,8 @@ export default {
     { src: '~/plugins/apolloMixins', ssr: true },
     { src: '~/plugins/nossr', ssr: false },
     { src: '~/plugins/universal' },
-    { src: '~/plugins/analytics', ssr: false }
+    { src: '~/plugins/analytics', ssr: false },
+    { src: '~/plugins/transition', ssr: false }
   ],
   /*
    ** Nuxt.js dev-modules
@@ -92,7 +93,7 @@ export default {
    ** Build configuration
    */
   build: {
-    transpile: ['lvan/utils'],
+    transpile: [/lvan\/(?!node_modules)/],
     splitChunks: {
       layouts: false,
       pages: true,
@@ -124,11 +125,6 @@ export default {
   render: {
     resourceHints: false
   },
-
-  // transition: {
-  //   name: 'page-in',
-  //   mode: 'in-out'
-  // },
 
   router: {
     extendRoutes(routes) {

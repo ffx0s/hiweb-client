@@ -1,40 +1,19 @@
 <template>
-  <div class="columns">
-    <div class="column1">
-      <Card :data="post" />
-
-      <Comment :typeId="$route.params.id" type="POST" />
-
-      <Auth :showError="false">
-        <Toolbar>
-          <VButton @click="edit" type="icon" title="编辑这篇文章">
-            <i class="icon-edit"></i>
-          </VButton>
-          <VButton @click="remove" type="icon" title="删除这篇文章">
-            <i class="icon-trash-empty"></i>
-          </VButton>
-        </Toolbar>
-      </Auth>
-    </div>
-    <div class="column2">
-      <AdjacentPosts :post="adjacentPosts" />
-      <client-only>
-        <Toc :tocs="post.toc" />
-      </client-only>
-    </div>
-  </div>
+  <SideView style="padding-top: 0">
+    <Card :data="post" />
+    <Comment :typeId="$route.params.id" type="POST" />
+    <RightSide slot="side" :adjacentPosts="adjacentPosts" :toc="post.toc" />
+  </SideView>
 </template>
 
 <script>
 import gql from 'graphql-tag'
-import VButton from 'lvan/button/index.vue'
+import RightSide from './modules/rightSide'
+import SideView from '@/components/sideView'
 import Card from '@/components/cards/c1'
 import Comment from '@/components/comment'
-import Toolbar from '@/components/toolbar'
-import Auth from '@/components/auth'
-import Toc from '@/components/side/toc'
-import AdjacentPosts from '@/components/side/adjacentPosts'
 import { beforeAsyncData } from '@/utils/shared'
+import { transition } from '@/plugins/transition'
 
 const postQuery = gql`
   query getPost($id: ID!) {
@@ -72,16 +51,13 @@ const postQuery = gql`
 `
 
 export default {
-  layout: 'base',
   components: {
     Card,
     Comment,
-    Toolbar,
-    VButton,
-    Auth,
-    Toc,
-    AdjacentPosts
+    SideView,
+    RightSide
   },
+  transition,
   head() {
     return {
       title: this.post.title + ' | hiweb',
@@ -108,47 +84,15 @@ export default {
         variables: { id: params.id }
       })
       .then(({ data }) => {
+        data.post.content = data.post.content.replace(
+          /<pre/g,
+          '<pre ignore-no-bounce'
+        )
         return {
           post: data.post,
           adjacentPosts: data.adjacentPosts
         }
       })
-  }),
-  methods: {
-    edit() {
-      this.$router.push({ name: 'edit', query: { id: this.post.id } })
-    },
-    remove() {
-      const vm = this
-      this.$modal({
-        content: '是否删除这篇文章？',
-        showCancelButton: true,
-        overlayClick: false,
-        confirm(instance) {
-          instance.confirmLoading = true
-          vm.$apollo
-            .mutate({
-              fetchPolicy: 'no-cache',
-              mutation: require('@/graphql/deletePost'),
-              variables: {
-                id: vm.post.id
-              }
-            })
-            .then(({ data }) => {
-              instance.confirmLoading = false
-              instance.done()
-              vm.$toast({ type: 'success' })
-              vm.$router.go(-1)
-            })
-            .catch((err) => {
-              vm.$toast({ type: 'error', title: err.message })
-              instance.confirmLoading = false
-            })
-        }
-      })
-    }
-  }
+  })
 }
 </script>
-
-<style lang="postcss" module></style>
