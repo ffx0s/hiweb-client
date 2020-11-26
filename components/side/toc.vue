@@ -1,9 +1,5 @@
 <template>
-  <Box
-    :class="[$style.toc, toggle ? $style.show : '', 'box']"
-    v-if="$route.name === 'post-id' && tree.length"
-    title="目录"
-  >
+  <Box v-if="tree.length" title="目录">
     <ul :class="$style.tree">
       <li v-for="(item, itemIndex) in tree" :key="itemIndex">
         <a :class="$style.anchor" :href="'#' + item.slug">
@@ -22,15 +18,11 @@
         </ul>
       </li>
     </ul>
-    <div :class="$style.layer" @click="toggle = false"></div>
-    <div v-show="!toggle" :class="$style.toggle" @click="toggle = true">
-      <i class="icon-th-large"></i>
-    </div>
   </Box>
 </template>
 
 <script>
-import Box from './box'
+import Box from '@/components/box'
 import { listToTree } from '@/utils/editor'
 
 export default {
@@ -41,11 +33,6 @@ export default {
     tocs: {
       type: Array,
       default: () => []
-    }
-  },
-  data() {
-    return {
-      toggle: false
     }
   },
   computed: {
@@ -60,15 +47,6 @@ export default {
 </script>
 
 <style lang="postcss" module>
-.toc {
-  --tocButtonSize: 35px;
-  position: sticky;
-  top: var(--gap);
-  margin-top: var(--gap);
-}
-.toggle {
-  display: none;
-}
 .tree {
   padding-left: 20px;
   list-style: disc;
@@ -91,54 +69,5 @@ export default {
   font-size: 16px;
   font-weight: bold;
   color: var(--textPrimary);
-}
-
-@media (max-width: 1000px) {
-  .toc {
-    box-shadow: 1px 2px 15px rgba(0, 0, 0, 0.05);
-    position: fixed;
-    margin-top: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 280px;
-    z-index: 2;
-    transition: 0.3s transform;
-    transform: translate3d(100%, 0, 0);
-    &.show {
-      transform: translate3d(0, 0, 0);
-      & .layer {
-        opacity: 1;
-        visibility: visible;
-      }
-    }
-  }
-  .toggle {
-    display: block;
-    position: fixed;
-    bottom: 25%;
-    left: calc(var(--tocButtonSize) * -1);
-    width: var(--tocButtonSize);
-    height: var(--tocButtonSize);
-    line-height: var(--tocButtonSize);
-    text-align: center;
-    color: var(--textRegular);
-    background-color: white;
-    font-size: 16px;
-    border-radius: 4px 0 0px 4px;
-    box-shadow: -4px 0px 6px rgba(0, 0, 0, 0.05);
-    cursor: pointer;
-  }
-  .layer {
-    position: absolute;
-    top: 0;
-    left: -100vw;
-    width: 100vw;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.3);
-    transition: 0.3s;
-    opacity: 0;
-    visibility: hidden;
-  }
 }
 </style>

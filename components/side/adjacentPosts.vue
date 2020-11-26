@@ -1,5 +1,5 @@
 <template>
-  <Box title="推荐" class="box">
+  <Box title="推荐">
     <ul>
       <li v-if="post.prev" :class="$style.item">
         <nuxt-link
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import Box from './box'
+import Box from '@/components/box'
 
 export default {
   components: {

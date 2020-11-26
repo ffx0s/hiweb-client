@@ -1,11 +1,12 @@
 <template>
-  <div class="box">
+  <div>
     <Archive :date="archive.date" :posts="archive.posts" />
   </div>
 </template>
 
 <script>
 import gql from 'graphql-tag'
+import { transition } from '@/plugins/transition'
 import Archive from '@/components/archive'
 import { beforeAsyncData } from '@/utils/shared'
 
@@ -25,6 +26,7 @@ const archiveQuery = gql`
 `
 
 export default {
+  transition,
   components: {
     Archive
   },

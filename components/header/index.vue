@@ -1,67 +1,258 @@
 <template>
-  <div :class="$style.header">
-    <div :class="$style.inner">
-      <a :class="$style.logo" href="#">
-        <img
-          src="https://static.webfed.cn/o_1dcbbpm8510miv7h1b0i1qvn1tln9.jpeg?imageView2/0/w/500"
-          alt="logo"
+  <header :class="$style.header">
+    <div :class="[$style.inner, 'wrapper']">
+      <div :class="$style.left">
+        <!-- logo -->
+        <nuxt-link :class="[$style.logo, 'logo']" to="/" exact title="hiweb" />
+        <i
+          @click="toggleTheme('')"
+          class="theme-icon icon-sun-inv"
+          title="亮色主题"
         />
-      </a>
-      <ul :class="$style.nav">
-        <li><a href="#">首页</a></li>
-        <li><a href="#">分类</a></li>
-        <li><a href="#">存档</a></li>
-        <li><a href="#">工具</a></li>
-        <li><a href="#">关于</a></li>
-      </ul>
-      <div :class="$style.social">
-        <a href="#" class="icon-github-circled"></a>
-        <a href="#" class="icon-weibo"></a>
-        <a href="#" class="icon-twitter"></a>
-        <a href="#" class="icon-rss"></a>
+        <i
+          @click="toggleTheme('theme--dark')"
+          class="theme-icon icon-moon"
+          title="暗色主题"
+        />
+      </div>
+
+      <!-- nav -->
+      <nav :class="$style.nav">
+        <nuxt-link :class="$style.navItem" to="/" exact>首页</nuxt-link>
+        <nuxt-link
+          :class="$style.navItem"
+          v-for="category in categories"
+          :key="category.id"
+          :to="`/category/${category.name}/`"
+        >
+          {{ category.name }}
+        </nuxt-link>
+        <nuxt-link :class="$style.navItem" to="/archives/page/1/">
+          存档
+        </nuxt-link>
+        <nuxt-link :class="$style.navItem" to="/about/">
+          关于
+        </nuxt-link>
+        <Auth
+          :showError="false"
+          :class="$style.navItem"
+          tag="nuxt-link"
+          to="/manage/"
+        >
+          管理
+        </Auth>
+      </nav>
+
+      <!-- right -->
+      <div :class="$style.right">
+        <Autocomplete
+          @search="handleSearch"
+          @select="handleSelect"
+          :listClass="$style.searchResult"
+        >
+          <template v-slot:input="{ input, keyup, focus, blur }">
+            <Search
+              ref="searchInput"
+              v-model="searchValue"
+              @input="input"
+              @keyup.native="keyup"
+              @focus="focus"
+              @blur="blur"
+              @active="(active) => (searchActive = active)"
+              :active="searchActive"
+            />
+          </template>
+        </Autocomplete>
+
+        <!-- menu -->
+        <HamIcon
+          :class="$style.menuIcon"
+          :active="showDrawer"
+          @click.native="handleMenuClick"
+        />
       </div>
     </div>
-  </div>
+  </header>
 </template>
+
+<script>
+import gql from 'graphql-tag'
+import Autocomplete from '@/components/autocomplete'
+import Auth from '@/components/auth'
+import HamIcon from '@/components/hamIcon'
+import Search from '@/components/search'
+
+const POSTS_QUERY = gql`
+  query getPosts($title: String) {
+    posts(page: 1, limit: 20, title: $title) {
+      docs {
+        id
+        title
+        category {
+          id
+          name
+        }
+      }
+    }
+  }
+`
+
+export default {
+  components: {
+    Autocomplete,
+    Auth,
+    HamIcon,
+    Search
+  },
+  data() {
+    return {
+      categories: [],
+      searchValue: '',
+      menuActive: false,
+      searchActive: false
+    }
+  },
+  computed: {
+    showDrawer() {
+      return this.$store.state.showDrawer
+    }
+  },
+  apollo: {
+    categories: {
+      query: require('@/graphql/categories')
+    }
+  },
+  beforeMount() {
+    this.lastThemeName = localStorage.THEME
+  },
+  methods: {
+    handleSearch(value, callback) {
+      this.$apollo
+        .query({
+          fetchPolicy: 'no-cache',
+          query: POSTS_QUERY,
+          variables: {
+            title: value
+          }
+        })
+        .then(({ data }) => {
+          const posts = data.posts.docs.map((post) => {
+            return { id: post.id, value: post.title }
+          })
+          callback(posts)
+        })
+        .catch((error) => {
+          callback(null, error)
+        })
+    },
+    handleSelect(post) {
+      this.$router.push('/post/' + post.id + '/')
+      this.searchValue = ''
+      this.$refs.searchInput.emitBlur()
+    },
+    toggleTheme(name) {
+      if (this.lastThemeName) {
+        document.body.classList.remove(this.lastThemeName)
+      }
+      if (name) {
+        document.body.classList.add(name)
+      }
+      this.lastThemeName = name
+      localStorage.THEME = name
+    },
+    handleMenuClick() {
+      this.$store.commit('showDrawer', !this.showDrawer)
+    }
+  }
+}
+</script>
 
 <style lang="postcss" module>
 .header {
-  width: var(--headerWidth);
-  height: 100%;
-  background-color: #fff;
-  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.08);
+  position: relative;
+  background-color: var(--background);
   z-index: 9999;
+  height: var(--headerHeight);
 }
+
 .inner {
-  padding: 78px 38px 28px;
+  display: flex;
+  align-items: center;
+  height: 100%;
 }
+
+.left {
+  position: relative;
+  height: 2.3125rem;
+  width: 6.25rem;
+}
+
 .logo {
   display: block;
-  margin: 0 auto 38px;
-  width: 120px;
-  height: 120px;
-  text-align: center;
-  & img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-  }
+  width: 100%;
+  height: 100%;
+  background-color: var(--primary);
 }
+
 .nav {
-  text-align: center;
-  & li {
-    margin: 14px 0;
-  }
-  & a {
-    color: var(--textRegular);
+  margin-left: 1.875rem;
+  display: flex;
+}
+
+.navItem {
+  height: 100%;
+  line-height: var(--headerHeight);
+  margin: 0 2px;
+  padding: 0 10px;
+  font-size: 16px;
+  color: var(--textPrimary);
+  transition: 0.3s;
+}
+
+.right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex: 1;
+}
+
+.searchResult {
+  width: 250px;
+}
+
+.menuIcon {
+  display: none;
+  margin-right: -10px;
+  margin-left: 5px;
+}
+
+@media (hover: hover) {
+  .navItem {
+    &:hover {
+      color: var(--primary);
+    }
   }
 }
-.social {
-  margin-top: 70px;
-  text-align: center;
-  & a {
-    margin: 0 10px;
-    color: var(--textRegular);
+
+@media not all and (max-width: 768px) {
+  .header {
+    position: sticky;
+    top: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    box-shadow: var(--shadow);
+  }
+  .menuIcon {
+    display: block;
+  }
+  .inner {
+    padding: 0 var(--gap);
+  }
+  .nav {
+    display: none;
   }
 }
 </style>

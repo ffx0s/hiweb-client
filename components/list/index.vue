@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div v-if="data.docs.length" :class="$style.list" class="box">
+  <SideView>
+    <div v-if="data.docs.length" class="gap-margin-bottom">
       <Card
         v-for="post in data.docs"
         :key="post.id"
@@ -23,20 +23,34 @@
       v-else-if="!data.total || data.page > data.pages"
       :error="{ message: '太懒了，什么都没有！' }"
     />
-  </div>
+
+    <div slot="side">
+      <Archive />
+      <Tag />
+      <AppFooter />
+    </div>
+  </SideView>
 </template>
 
 <script>
 import Card from '@/components/cards/c2'
 import Pagination from '@/components/pagination'
 import Error from '@/layouts/error'
+import Archive from '@/components/side/archive'
+import Tag from '@/components/side/tag'
+import AppFooter from '@/components/footer'
+import SideView from '@/components/sideView'
 
 export default {
   name: 'List',
   components: {
     Card,
     Pagination,
-    Error
+    Error,
+    Archive,
+    Tag,
+    AppFooter,
+    SideView
   },
   props: {
     data: {
@@ -55,9 +69,3 @@ export default {
   }
 }
 </script>
-
-<style lang="postcss" module>
-.list {
-  margin-bottom: var(--gap);
-}
-</style>

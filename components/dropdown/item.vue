@@ -38,8 +38,7 @@ export default {
   color: var(--textPrimary);
   cursor: pointer;
   &:hover {
-    color: var(--textPrimary);
-    background-color: var(--background);
+    color: var(--primary);
   }
 }
 .large {

@@ -1,100 +1,90 @@
 <template>
-  <Auth class="box">
-    <div :class="$style.header">
-      <ImageUpload
-        :class="$style.imageLink"
-        :imageClass="$style.image"
-        v-model="post.poster"
-      />
-    </div>
-
-    <div :class="$style.content">
-      <div :class="$style.meta">
-        <span v-once v-if="post.id">
-          <i class="icon-clock"></i>
-          {{ post.created | ago }}
-        </span>
-        <span v-once v-else>
-          <i class="icon-clock"></i>
-          刚刚
-        </span>
-        &nbsp;
-        <Dropdown v-model="showCategoryMenu" align="right" click>
-          <a slot="title" :class="$style.tag" href="javascript:;">
-            <i class="icon-th-large" />
-            {{ post.category.name || '选择分类' }}
-          </a>
-          <DropdownItem
-            v-for="category in categories"
-            :key="category.id"
-            @click.native="selectCategory(category)"
-            size="medium"
-          >
-            {{ category.name }}
-          </DropdownItem>
-          <DropdownItem
-            tag="nuxt-link"
-            to="/manage?type=categories"
-            size="medium"
-          >
-            <span class="v-color-primary">添加新分类</span>
-          </DropdownItem>
-        </Dropdown>
-        &nbsp;
-        <a
-          v-for="(tagItem, i) in post.tags"
-          :key="i"
-          :class="[$style.tag, $style.item]"
-          href="javascript:;"
-        >
-          <i :class="[$style.iconTag, 'icon-tag']"></i>
-          <i
-            @click="post.tags.splice(i, 1)"
-            :class="[$style.iconCancel, 'icon-cancel-circled']"
-          />
-          <span>{{ tagItem }}</span>
-        </a>
-        &nbsp;
-        <div :class="[$style.tag, 'display-flex']">
-          <i class="icon-tag"></i>
-          <Autocomplete
-            ref="autocomplete"
-            v-model="searchValue"
-            @search="handleSearchTag"
-            @select="handleSelectTag"
-            @blur="handleBlur"
-            :inputClass="$style.tagInput"
-            placeholder="输入标签"
-          />
-        </div>
+  <SideView>
+    <Auth>
+      <div :class="$style.header">
+        <ImageUpload
+          :class="$style.imageLink"
+          :imageClass="$style.image"
+          v-model="post.poster"
+        />
       </div>
 
-      <Editor ref="editor" :markdown="post.markdown" />
-    </div>
+      <div :class="$style.content">
+        <div :class="$style.meta">
+          <span v-once v-if="post.id">
+            <i class="icon-clock"></i>
+            {{ post.created | ago }}
+          </span>
+          <span v-once v-else>
+            <i class="icon-clock"></i>
+            刚刚
+          </span>
+          &nbsp;
+          <Dropdown v-model="showCategoryMenu" align="right" click>
+            <a slot="title" :class="$style.tag" href="javascript:;">
+              <i class="icon-th-large" />
+              {{ post.category.name || '选择分类' }}
+            </a>
+            <DropdownItem
+              v-for="category in categories"
+              :key="category.id"
+              @click.native="selectCategory(category)"
+              size="medium"
+            >
+              {{ category.name }}
+            </DropdownItem>
+            <DropdownItem
+              tag="nuxt-link"
+              to="/manage/?type=categories"
+              size="medium"
+            >
+              <span class="v-color-primary">添加新分类</span>
+            </DropdownItem>
+          </Dropdown>
+          <a
+            v-for="(tagItem, i) in post.tags"
+            :key="i"
+            :class="[$style.tag, $style.item]"
+            href="javascript:;"
+          >
+            <i :class="[$style.iconTag, 'icon-tag']"></i>
+            <i
+              @click="post.tags.splice(i, 1)"
+              :class="[$style.iconCancel, 'icon-cancel-circled']"
+            />
+            <span>{{ tagItem }}</span>
+          </a>
+          <div :class="[$style.tag, 'display-flex']">
+            <i class="icon-tag"></i>
+            <Autocomplete
+              ref="autocomplete"
+              v-model="tagSearchValue"
+              @search="handleSearchTag"
+              @select="handleSelectTag"
+              @blur="handleBlur"
+              :inputClass="$style.tagInput"
+              placeholder="输入标签"
+            />
+          </div>
+        </div>
 
-    <Toolbar>
-      <VButton
-        :loading="savePostLoading"
-        @click="savePost"
-        type="icon"
-        title="保存"
-      >
-        <i class="icon-floppy"></i>
-      </VButton>
-    </Toolbar>
-  </Auth>
+        <Editor ref="editor" :markdown="post.markdown" />
+      </div>
+    </Auth>
+    <RightSide slot="side" :save="savePost" :loading="savePostLoading" />
+  </SideView>
 </template>
 
 <script>
-import VButton from 'lvan/button/index.vue'
 import gql from 'graphql-tag'
 import ImageUpload from './modules/imageUpload'
+import RightSide from './modules/rightSide'
 import Editor from '@/components/editor'
 import Auth from '@/components/auth'
 import Dropdown from '@/components/dropdown'
 import DropdownItem from '@/components/dropdown/item'
-import Toolbar from '@/components/toolbar'
 import Autocomplete from '@/components/autocomplete'
+import SideView from '@/components/sideView'
 
 const LOCAL_POST = 'LOCAL_POST'
 
@@ -185,9 +175,9 @@ export default {
     DropdownItem,
     ImageUpload,
     Editor,
-    Toolbar,
-    VButton,
-    Autocomplete
+    Autocomplete,
+    RightSide,
+    SideView
   },
   head() {
     return {
@@ -200,7 +190,7 @@ export default {
       categories: [],
       showCategoryMenu: false,
       savePostLoading: false,
-      searchValue: ''
+      tagSearchValue: ''
     }
   },
   apollo: {
@@ -212,9 +202,8 @@ export default {
     if (query.id) {
       const data = await getPostData(app.apolloProvider.defaultClient, query.id)
       return data
-    } else {
-      return { post: initPostData() }
     }
+    return { post: initPostData() }
   },
   beforeMount() {
     if (!this.$route.query.id) {
@@ -373,7 +362,7 @@ export default {
           })
           .then(({ data }) => {
             this.post.tags.push(name)
-            this.searchValue = ''
+            this.tagSearchValue = ''
           })
           .catch((error) => {
             this.$toast(error.message)
@@ -407,7 +396,7 @@ export default {
         this.post.tags.push(tag.value)
       }
       setTimeout(() => {
-        this.searchValue = ''
+        this.tagSearchValue = ''
       })
     },
     handleBlur(event) {
@@ -442,6 +431,6 @@ export default {
   padding: 0 4px;
   font-size: 13px;
   color: var(--textRegular);
-  background-color: var(--themeBackground);
+  background-color: var(--background);
 }
 </style>

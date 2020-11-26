@@ -125,7 +125,7 @@
   box-sizing: content-box;
   max-width: 70%;
 }
-@media (max-width: 760px) {
+@media (max-width: 768px) {
   .markdown-body img {
     max-width: 100%;
   }
@@ -182,11 +182,7 @@
   font-weight: 600;
 }
 .markdown-body table tr {
-  background-color: var(--themeBackground);
-  border-top: 1px solid var(--lightGray);
-}
-.markdown-body table tr:nth-child(2n) {
-  background-color: #f6f8fa;
+  border-top: 1px solid var(--border);
 }
 .markdown-body h2 {
   font-size: 24px;
@@ -252,6 +248,7 @@
   overflow: visible;
   padding: 0;
   word-wrap: normal;
+  white-space: pre-wrap;
   color: var(--textRegular);
 } 
 .markdown-body .border {

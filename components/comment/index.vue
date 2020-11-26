@@ -1,5 +1,5 @@
 <template>
-  <div id="Anchor_comment" :class="[$style.comment, 'box']">
+  <div id="Anchor_comment" :class="$style.comment">
     <client-only>
       <div :class="$style.header">
         <div :class="[$style.bar, 'row-between']">
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import InfiniteScroll from 'lvan/infiniteScroll/index.vue'
+import InfiniteScroll from 'lvan/infiniteScroll'
 import CommentItem from './item'
 import CommentForm from './form'
 import Login from '@/components/login'
@@ -184,14 +184,14 @@ export default {
 .comment {
   min-height: 270px;
   margin-top: var(--gap);
-  padding: 0 18px 18px;
+  padding: 0 0 18px;
 }
 .header {
   padding-top: 18px;
   position: sticky;
   top: 0;
-  background-color: var(--themeBackground);
   z-index: 2;
+  background-color: var(--background);
 }
 .bar {
   font-size: 14px;
@@ -205,5 +205,12 @@ export default {
 }
 .loading {
   color: var(--border);
+}
+
+@media (max-width: 768px) {
+  .comment {
+    padding-left: var(--gap);
+    padding-right: var(--gap);
+  }
 }
 </style>

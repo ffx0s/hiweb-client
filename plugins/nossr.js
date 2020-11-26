@@ -14,6 +14,13 @@ Vue.use(VueLazyload, {
     progressive(listener, options) {
       listener.src = upyImage(listener.src)
     }
+  },
+  listenEvents: ['scroll', 'resize', 'animationend', 'transitionend'],
+  // throttleWait: 200,
+  observer: true,
+  observerOptions: {
+    rootMargin: '0px',
+    threshold: 0.1
   }
 })
 Vue.use(Toast)

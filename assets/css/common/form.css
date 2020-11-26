@@ -1,0 +1,25 @@
+body {
+  & .input {
+    padding: 8px;
+    width: 100%;
+    outline: none;
+    transition: 0.3s;
+    color: var(--textPrimary);
+    border-radius: 4px;
+    border: 1px solid var(--lightGray);
+    background-color: var(--background);
+    font-size: 14px;
+    appearance: none;
+    font-family: -apple-system-font, Helvetica Neue, Helvetica, sans-serif;
+    &:focus {
+      color: var(--textPrimary);
+      background-color: var(--lightBackground);
+      border: 1px solid var(--primary);
+    }
+  }
+
+  & textarea.input {
+    resize: none;
+    min-height: 80px;
+  }
+}

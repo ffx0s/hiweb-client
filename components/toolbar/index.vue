@@ -1,5 +1,5 @@
 <template>
-  <div :class="[$style.toolbar, 'box']">
+  <div :class="$style.toolbar">
     <slot />
   </div>
 </template>
@@ -10,10 +10,7 @@ export default {}
 
 <style lang="postcss" module>
 .toolbar {
-  position: fixed;
-  top: 30%;
   width: 46px;
-  margin-left: -65px;
   & button {
     width: 100%;
     padding: 10px;

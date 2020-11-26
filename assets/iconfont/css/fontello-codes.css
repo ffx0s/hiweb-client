@@ -1,4 +1,6 @@
+@charset "UTF-8";
 
+ 
 .icon-tag:before { content: '\e800'; } /* '' */
 .icon-clock:before { content: '\e801'; } /* '' */
 .icon-right-open-big:before { content: '\e802'; } /* '' */
@@ -10,10 +12,13 @@
 .icon-trash-empty:before { content: '\e808'; } /* '' */
 .icon-edit:before { content: '\e809'; } /* '' */
 .icon-floppy:before { content: '\e80a'; } /* '' */
-.icon-cancel:before { content: '\e80b'; } /* '' */
 .icon-moon:before { content: '\e80c'; } /* '' */
 .icon-sun-inv:before { content: '\e80d'; } /* '' */
 .icon-home-outline:before { content: '\e80e'; } /* '' */
+.icon-picture:before { content: '\e80f'; } /* '' */
 .icon-github-circled:before { content: '\f09b'; } /* '' */
+.icon-docs:before { content: '\f0c5'; } /* '' */
+.icon-menu:before { content: '\f0c9'; } /* '' */
 .icon-upload-cloud:before { content: '\f0ee'; } /* '' */
 .icon-angle-down:before { content: '\f107'; } /* '' */
+.icon-cancel:before { content: '🌄'; } /* '\1f304' */

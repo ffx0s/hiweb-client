@@ -1,5 +1,5 @@
 <template>
-  <div class="__error-page box">
+  <div class="__error-page">
     <i :class="iconClass"></i>
 
     <div class="title">

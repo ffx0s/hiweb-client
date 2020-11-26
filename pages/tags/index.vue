@@ -1,12 +1,16 @@
 <template>
-  <div :class="$style.tags" class="box">
-    <Tags :tags="tags.docs" />
+  <div>
+    <Box title="标签" fill>
+      <Tags :tags="tags.docs" />
+    </Box>
   </div>
 </template>
 
 <script>
 import gql from 'graphql-tag'
+import { transition } from '@/plugins/transition'
 import { beforeAsyncData } from '@/utils/shared'
+import Box from '@/components/box'
 import Tags from '@/components/tags'
 
 const TAGS_QUERY = gql`
@@ -29,7 +33,9 @@ export default {
       ]
     }
   },
+  transition,
   components: {
+    Box,
     Tags
   },
   asyncData: beforeAsyncData(({ app, route }) => {
@@ -48,9 +54,3 @@ export default {
   })
 }
 </script>
-
-<style lang="postcss" module>
-.tags {
-  padding: var(--gap);
-}
-</style>

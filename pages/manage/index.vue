@@ -1,5 +1,5 @@
 <template>
-  <Auth :class="$style.manage" @auth="auth" class="box">
+  <Auth :class="$style.manage" @auth="auth">
     <div class="row-between">
       <div>
         <Dropdown v-model="showMenu" :title="title" click align="right">
@@ -87,7 +87,7 @@
 </template>
 
 <script>
-import VButton from 'lvan/button/index.vue'
+import VButton from 'lvan/button'
 import gql from 'graphql-tag'
 import config, { getConfig } from './modules/config'
 import EditModal from './modules/editModal'
@@ -330,11 +330,8 @@ export default {
   & tr {
     transition: 0.3s background;
   }
-  & tbody tr:nth-child(2n) {
-    background-color: transparent;
-  }
   & tbody tr:hover {
-    background-color: var(--background);
+    background-color: var(--lightBackgroundActive);
   }
 }
 </style>

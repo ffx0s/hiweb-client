@@ -1,4 +1,5 @@
 import gql from 'graphql-tag'
+import { transition } from '@/plugins/transition'
 import List from '@/components/list'
 import { beforeAsyncData, isFunction } from '@/utils/shared'
 
@@ -30,9 +31,11 @@ export default function createList({
   title,
   description,
   keywords,
-  routeOptions
+  routeOptions,
+  slotComponent
 }) {
   return {
+    transition,
     head() {
       return {
         title: this.getValue(title),
@@ -67,7 +70,11 @@ export default function createList({
         })
     }),
     render(h) {
-      return h(List, { props: { data: this.posts, routeOptions } })
+      return h(
+        List,
+        { props: { data: this.posts, routeOptions } },
+        slotComponent && [h(slotComponent)]
+      )
     },
     methods: {
       getValue(value) {

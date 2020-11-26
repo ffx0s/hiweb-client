@@ -40,10 +40,10 @@
 </template>
 
 <script>
-import Modal from 'lvan/modal/index.vue'
+import Modal from 'lvan/modal'
 import Group from 'lvan/cell/group.vue'
-import Cell from 'lvan/cell/index.vue'
-import Validator from 'lvan/validator/index.vue'
+import Cell from 'lvan/cell'
+import Validator from 'lvan/validator'
 import { getConfig } from './config'
 
 export default {

@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import TimeLine from 'lvan/timeline/index.vue'
+import TimeLine from 'lvan/timeline'
 import TimeLineItem from 'lvan/timeline/item.vue'
 
 export default {
@@ -53,7 +53,6 @@ export default {
 <style lang="postcss" module>
 .archive {
   padding: var(--gap);
-  margin-bottom: var(--gap);
   &:last-child {
     margin-bottom: 0;
   }
@@ -65,6 +64,8 @@ export default {
 }
 .item {
   display: flex;
+  overflow: hidden;
+  margin-top: -5px;
 }
 .left {
   margin-top: 5px;
@@ -74,11 +75,13 @@ export default {
   height: 60px;
   border-radius: 4px;
   background-color: var(--background);
+  overflow: hidden;
   & img {
     border-radius: inherit;
   }
 }
 .right {
   flex: 1;
+  font-size: 16px;
 }
 </style>

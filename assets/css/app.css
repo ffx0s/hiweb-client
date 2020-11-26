@@ -6,6 +6,7 @@
 @import './themes/dark.css';
 @import './common/markdown.css';
 @import './common/utils.css';
+@import './common/form.css';
 @import './common/layout.css';
 /* @import 'prismjs/themes/prism.css'; */
 @import 'prismjs/themes/prism-tomorrow.css';

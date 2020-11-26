@@ -1,13 +1,14 @@
 .theme--dark {
-  --editorColor80: #cecece;
   --textPrimary: #cecece;
   --textRegular: #a7a7a7;
   --textSecondary: #d9d9d9;
   --background: rgb(32, 33, 36);
-  --themeBackground: rgb(53, 54, 58);
-  /* code background */
-  --codeBackground: rgb(53, 54, 58);
+  --lightBackground: rgb(53, 54, 58);
+  --lightBackgroundActive: rgb(64, 65, 68);
+  --scrollbarColor: #616161;
   --lightGray: #616161;
+  --codeBackground: rgb(53, 54, 58);
+  --editorColor80: #cecece;
   & .theme-icon.icon-sun-inv {
     color: var(--warning);
     display: block;
