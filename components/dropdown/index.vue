@@ -16,25 +16,25 @@ export default {
   props: {
     click: {
       type: Boolean,
-      default: false
+      default: false,
     },
     title: {
       type: String,
-      default: ''
+      default: '',
     },
     align: {
       type: String,
-      default: 'left'
+      default: 'left',
     },
     value: {
       type: [Boolean, undefined],
-      default: undefined
-    }
+      default: undefined,
+    },
   },
   data() {
     return {
       isClick: this.click,
-      clickValue: false
+      clickValue: false,
     }
   },
   computed: {
@@ -55,8 +55,8 @@ export default {
         } else {
           this.$emit('input', value)
         }
-      }
-    }
+      },
+    },
   },
   mounted() {
     this.isClick = this.click || isTouchDevice()
@@ -78,8 +78,8 @@ export default {
     },
     close() {
       this.currentValue = false
-    }
-  }
+    },
+  },
 }
 </script>
 

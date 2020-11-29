@@ -22,7 +22,7 @@ import { formatDate } from '@/utils/filters'
 
 export default {
   components: {
-    Box
+    Box,
   },
   apollo: {
     archives: {
@@ -39,11 +39,12 @@ export default {
       `,
       variables: {
         page: 1,
-        limit: 5
+        limit: 5,
       },
       deep: false,
       update(data) {
         const docs = data.archives.docs
+        // eslint-disable-next-line no-prototype-builtins
         if (!docs.hasOwnProperty('__ob__')) {
           docs.forEach((archive) => {
             const date = archive.date
@@ -52,9 +53,9 @@ export default {
           })
         }
         return docs
-      }
-    }
-  }
+      },
+    },
+  },
 }
 </script>
 

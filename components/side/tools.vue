@@ -25,19 +25,19 @@ import Box from '@/components/box'
 
 export default {
   components: {
-    Box
+    Box,
   },
   data() {
     return {
       internalTools: [
         {
           name: '🦊 字符串编解码',
-          to: '/tools/transcode/'
+          to: '/tools/transcode/',
         },
         {
           name: '🐧 二维码编解码',
-          to: '/tools/qrcode/'
-        }
+          to: '/tools/qrcode/',
+        },
 
         // {
         //   name: '🐹 图片转Base64',
@@ -51,15 +51,15 @@ export default {
       externalTools: [
         {
           name: '🐱 GIF编辑器',
-          href: 'https://gif.webfed.cn'
+          href: 'https://gif.webfed.cn',
         },
         {
           name: '🐭 可视化布局编辑器',
-          href: 'https://ffx0s.github.io/blocks/dist'
-        }
-      ]
+          href: 'https://ffx0s.github.io/blocks/dist',
+        },
+      ],
     }
-  }
+  },
 }
 </script>
 

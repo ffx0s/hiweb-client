@@ -42,10 +42,10 @@
 <script>
 import VRadio from 'lvan/radio'
 import VRadioGroup from 'lvan/radio/group.vue'
-// import VButton from 'lvan/button'
 import VTextarea from 'lvan/textarea'
 import { debounce } from 'lvan/utils/shared'
 import md5 from 'blueimp-md5'
+import { transition } from '@/plugins/transition.client'
 import Box from '@/components/box'
 import Copy from '@/components/copy'
 import { utf8Encode, utf8Decode } from '@/utils/endecode/utf8'
@@ -62,10 +62,7 @@ function hexEscape(string) {
   let result = ''
   let hex
   while (++index < length) {
-    hex = string
-      .charCodeAt(index)
-      .toString(16)
-      .toUpperCase()
+    hex = string.charCodeAt(index).toString(16).toUpperCase()
     result += '\\x' + ('00' + hex).slice(-2)
   }
   return result
@@ -90,7 +87,7 @@ const endecode = {
   utf8Decode(string) {
     // eslint-disable-next-line no-eval
     return utf8Decode(eval("'" + string + "'"))
-  }
+  },
 }
 
 export default {
@@ -98,15 +95,15 @@ export default {
     Box,
     VRadio,
     VRadioGroup,
-    // VButton,
     VTextarea,
-    Copy
+    Copy,
   },
+  transition,
   data() {
     return {
       type: 'uniEncode',
       content: '',
-      result: ''
+      result: '',
     }
   },
   watch: {
@@ -115,7 +112,7 @@ export default {
     },
     type(type) {
       this.run(this.type, this.content)
-    }
+    },
   },
   mounted() {
     this.run = debounce(this.run)
@@ -131,7 +128,7 @@ export default {
       } else {
         this.result = ''
       }
-    }
-  }
+    },
+  },
 }
 </script>

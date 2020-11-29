@@ -4,8 +4,8 @@
       <slot name="title" />
       <span>{{ title }}</span>
       <nuxt-link
-        :class="$style.link"
         v-if="link"
+        :class="$style.link"
         :to="link"
         active-class=""
         title="查看更多"
@@ -24,25 +24,25 @@ export default {
   props: {
     title: {
       type: String,
-      default: ''
+      default: '',
     },
     link: {
       type: String,
-      default: ''
+      default: '',
     },
     contentClass: {
       type: String,
-      default: ''
+      default: '',
     },
     fill: {
       type: Boolean,
-      default: false
+      default: false,
     },
     bigTitle: {
       type: Boolean,
-      default: false
-    }
-  }
+      default: false,
+    },
+  },
 }
 </script>
 

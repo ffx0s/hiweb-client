@@ -6,5 +6,5 @@ export const githubLogin = {
       'href',
       githubLoginUrl + '?callback=' + encodeURIComponent(location.href)
     )
-  }
+  },
 }

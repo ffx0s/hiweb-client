@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.archive">
     <TimeLine :title="date | formatDate('YYYY年MM月')">
-      <TimeLineItem :class="$style.item" v-for="post in posts" :key="post.id">
+      <TimeLineItem v-for="post in posts" :key="post.id" :class="$style.item">
         <nuxt-link
           v-if="post.poster"
           :to="'/post/' + post.id + '/'"
@@ -35,18 +35,18 @@ import TimeLineItem from 'lvan/timeline/item.vue'
 export default {
   components: {
     TimeLine,
-    TimeLineItem
+    TimeLineItem,
   },
   props: {
     date: {
       type: String,
-      required: true
+      required: true,
     },
     posts: {
       type: Array,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 }
 </script>
 

@@ -1,33 +1,49 @@
 <template>
-  <Auth>
+  <VAuth>
     <Toolbar>
-      <VButton :loading="loading" @click="save" type="icon" title="保存">
+      <VButton :loading="saveLoading" type="icon" title="保存" @click="save">
         <i class="icon-floppy"></i>
       </VButton>
+      <VButton
+        :loading="changePosterLoading"
+        type="icon"
+        title="更换图片"
+        @click="changePoster"
+      >
+        <i class="icon-picture"></i>
+      </VButton>
     </Toolbar>
-  </Auth>
+  </VAuth>
 </template>
 
 <script>
 import VButton from 'lvan/button'
-import Auth from '@/components/auth'
+import VAuth from '@/components/auth'
 import Toolbar from '@/components/toolbar'
 
 export default {
   components: {
-    Auth,
+    VAuth,
     Toolbar,
-    VButton
+    VButton,
   },
   props: {
-    loading: {
+    saveLoading: {
       type: Boolean,
-      default: false
+      default: false,
     },
     save: {
       type: Function,
-      default: () => {}
-    }
-  }
+      default: () => {},
+    },
+    changePosterLoading: {
+      type: Boolean,
+      default: false,
+    },
+    changePoster: {
+      type: Function,
+      default: () => {},
+    },
+  },
 }
 </script>

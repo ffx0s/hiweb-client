@@ -4,16 +4,16 @@
     <client-only>
       <Toc :tocs="toc" />
     </client-only>
-    <Auth :showError="false">
+    <VAuth :show-error="false">
       <Toolbar :class="$style.toolbar">
-        <VButton @click="edit" type="icon" title="编辑">
+        <VButton type="icon" title="编辑" @click="edit">
           <i class="icon-edit"></i>
         </VButton>
-        <VButton @click="remove" type="icon" title="删除">
+        <VButton type="icon" title="删除" @click="remove">
           <i class="icon-trash-empty"></i>
         </VButton>
       </Toolbar>
-    </Auth>
+    </VAuth>
   </div>
 </template>
 
@@ -21,7 +21,7 @@
 import VButton from 'lvan/button'
 import Toc from '@/components/side/toc'
 import AdjacentPosts from '@/components/side/adjacentPosts'
-import Auth from '@/components/auth'
+import VAuth from '@/components/auth'
 import Toolbar from '@/components/toolbar'
 
 export default {
@@ -30,17 +30,17 @@ export default {
     AdjacentPosts,
     Toolbar,
     VButton,
-    Auth
+    VAuth,
   },
   props: {
     adjacentPosts: {
       type: Object,
-      required: true
+      required: true,
     },
     toc: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
   methods: {
     edit() {
@@ -59,8 +59,8 @@ export default {
               fetchPolicy: 'no-cache',
               mutation: require('@/graphql/deletePost'),
               variables: {
-                id: vm.$route.params.id
-              }
+                id: vm.$route.params.id,
+              },
             })
             .then(({ data }) => {
               instance.confirmLoading = false
@@ -72,10 +72,10 @@ export default {
               vm.$toast({ type: 'error', title: err.message })
               instance.confirmLoading = false
             })
-        }
+        },
       })
-    }
-  }
+    },
+  },
 }
 </script>
 

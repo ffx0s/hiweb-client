@@ -1,7 +1,7 @@
 import { onError } from 'apollo-link-error'
 import { apiUrl } from './index'
 
-export default function(context) {
+export default function (context) {
   const link = onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors) {
       const authError = graphQLErrors.find(
@@ -27,7 +27,7 @@ export default function(context) {
       credentials: 'include',
       headers: process.env.LIMITER_TICKET
         ? { 'Limiter-Ticket': process.env.LIMITER_TICKET }
-        : {}
-    }
+        : {},
+    },
   }
 }

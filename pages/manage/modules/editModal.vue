@@ -2,15 +2,15 @@
   <Modal
     v-model="visible"
     :title="form.id ? '修改' : '添加'"
-    @confirm="submit"
-    @cancel="cancel"
     show-cancel-button
     destroy-on-close
+    @confirm="submit"
+    @cancel="cancel"
   >
     <Validator ref="form" :model="form" :rules="rules">
       <Group
-        :border="false"
         v-if="items"
+        :border="false"
         label-align="left"
         label-width="100"
         value-align="left"
@@ -51,14 +51,14 @@ export default {
     Modal,
     Group,
     Cell,
-    Validator
+    Validator,
   },
   data() {
     return {
       visible: false,
       rules: {},
       form: {},
-      items: []
+      items: [],
     }
   },
   methods: {
@@ -77,7 +77,7 @@ export default {
           .mutate({
             mutation: edit.mutation,
             variables: {
-              [edit.variableName]: this.form
+              [edit.variableName]: this.form,
             },
             update: (store, { data: result }) => {
               const data = store.readQuery({ query })
@@ -98,7 +98,7 @@ export default {
 
                 store.writeQuery({ query, data })
               }
-            }
+            },
           })
           .then(({ data }) => {
             const item = data[Object.keys(data)[0]]
@@ -142,7 +142,7 @@ export default {
       }
 
       this.visible = true
-    }
-  }
+    },
+  },
 }
 </script>

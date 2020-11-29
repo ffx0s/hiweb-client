@@ -20,9 +20,9 @@
         <!-- 回复操作 -->
         <a
           :class="[$style.replylink, 'v-text-regular', 'icon-reply']"
-          @click="reply(data)"
           href="javascript:;"
           title="回复Ta"
+          @click="reply(data)"
         />
       </div>
 
@@ -42,7 +42,7 @@
         :class="$style.replyList"
         :style="{ height: height + 'px' }"
       >
-        <div ref="list" v-if="comments && comments.docs">
+        <div v-if="comments && comments.docs" ref="list">
           <CommentItem
             v-for="item in comments.docs"
             :key="item.id"
@@ -54,10 +54,10 @@
           v-else-if="error"
           :class="$style.replyBtn"
           :loading="$apollo.queries.comments.loading"
-          @click="refetch"
           small
           text
           type="error"
+          @click="refetch"
         >
           加载失败，点击重试
         </VButton>
@@ -65,14 +65,14 @@
           v-else
           :class="$style.replyBtn"
           :loading="$apollo.queries.comments.loading"
-          @click="skip = false"
           small
           text
+          @click="skip = false"
         >
           {{ '查看回复(' + data.count + ')' }}
         </VButton>
       </div>
-      <VButton v-else :class="$style.replyBtn" @click="reply(data)" small text>
+      <VButton v-else :class="$style.replyBtn" small text @click="reply(data)">
         回复Ta
       </VButton>
     </div>
@@ -87,7 +87,7 @@ export default {
   name: 'CommentItem',
   components: {
     Avatar,
-    VButton
+    VButton,
   },
   inject: ['type'],
   props: {
@@ -100,9 +100,9 @@ export default {
         name: '',
         created: '',
         content: '',
-        count: 0
-      })
-    }
+        count: 0,
+      }),
+    },
   },
   apollo: {
     comments: {
@@ -113,7 +113,7 @@ export default {
           limit: 20,
           sort: 1,
           type: this.type,
-          parentId: this.data.id
+          parentId: this.data.id,
         }
       },
       skip() {
@@ -121,20 +121,20 @@ export default {
       },
       error(error) {
         this.error = error
-      }
-    }
+      },
+    },
   },
   data() {
     return {
       skip: true,
       height: 28,
-      error: null
+      error: null,
     }
   },
   watch: {
     'comments.docs'() {
       this.updateHeight()
-    }
+    },
   },
   methods: {
     reply(data) {
@@ -150,8 +150,8 @@ export default {
           this.height = list.offsetHeight
         }
       })
-    }
-  }
+    },
+  },
 }
 </script>
 

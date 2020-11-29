@@ -1,7 +1,7 @@
 import gql from 'graphql-tag'
-import { transition } from '@/plugins/transition'
+import { transition } from '@/plugins/transition.client'
 import List from '@/components/list'
-import { beforeAsyncData, isFunction } from '@/utils/shared'
+import { isFunction } from '@/utils/shared'
 
 const POST_QUERY = gql`
   query getPosts($page: Int, $limit: Int, $category: String, $tag: String) {
@@ -32,7 +32,7 @@ export default function createList({
   description,
   keywords,
   routeOptions,
-  slotComponent
+  slotComponent,
 }) {
   return {
     transition,
@@ -43,17 +43,17 @@ export default function createList({
           {
             hid: 'keywords',
             name: 'keywords',
-            content: this.getValue(keywords)
+            content: this.getValue(keywords),
           },
           {
             hid: 'description',
             name: 'description',
-            content: this.getValue(description)
-          }
-        ]
+            content: this.getValue(description),
+          },
+        ],
       }
     },
-    asyncData: beforeAsyncData(({ params, app, route }) => {
+    asyncData({ params, app, route }) {
       return app.apolloProvider.defaultClient
         .query({
           fetchPolicy: 'no-cache',
@@ -62,13 +62,13 @@ export default function createList({
             limit: 8,
             page: params.page ? +params.page : 1,
             category: params.category || '',
-            tag: params.tag || ''
-          }
+            tag: params.tag || '',
+          },
         })
         .then((result) => {
           return { posts: result.data.posts }
         })
-    }),
+    },
     render(h) {
       return h(
         List,
@@ -79,7 +79,7 @@ export default function createList({
     methods: {
       getValue(value) {
         return isFunction(value) ? value.call(this) : value
-      }
-    }
+      },
+    },
   }
 }

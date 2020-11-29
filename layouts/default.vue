@@ -6,17 +6,17 @@
         <div class="container">
           <AnimatedRoute router-view-class="main" />
         </div>
-        <div :class="{ active: leftSideActive }" class="left-side">
+        <div :class="{ active: leftSideActive }" class="side left-side">
           <div class="left-side__scroll">
             <Tools />
           </div>
           <div
-            @click="leftSideActive = !leftSideActive"
             class="left-side__toggle"
+            @click="leftSideActive = !leftSideActive"
           >
             <i class="icon-right-open-big"></i>
           </div>
-          <div @click="leftSideActive = false" class="left-side__layer"></div>
+          <div class="left-side__layer" @click="leftSideActive = false"></div>
         </div>
       </div>
     </div>
@@ -35,12 +35,12 @@ export default {
     AnimatedRoute,
     AppHeader,
     Tools,
-    Drawer
+    Drawer,
   },
   data() {
     return {
-      leftSideActive: false
+      leftSideActive: false,
     }
-  }
+  },
 }
 </script>

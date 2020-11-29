@@ -35,14 +35,14 @@
               <span>颜色：</span>
               <InputColor
                 :value="encodeOptions.color.dark"
-                @input="updateColor"
                 class="flex1"
+                @input="updateColor"
               />
             </div>
             <VButton
-              @click="onEncode"
               :disabled="!encodeContent.trim()"
               type="primary"
+              @click="onEncode"
             >
               生成二维码
             </VButton>
@@ -55,20 +55,20 @@
 
         <!-- 上传解码 -->
         <QrcodeDropZone
-          ref="qrcodeDropZone"
           v-show="type === 'decodeUpload'"
+          ref="qrcodeDropZone"
+          :worker="Worker"
           @detect="onDetect"
           @dragover="onDragOver"
           @init="logErrors"
           @mouseenter.native="disablePaste = false"
           @mouseleave.native="disablePaste = true"
-          :worker="Worker"
         >
           <div
             :class="[
               $style.dropArea,
               dragover && $style.dragover,
-              uploaded && $style.uploaded
+              uploaded && $style.uploaded,
             ]"
           >
             <canvas ref="canvas" :class="$style.uploadImg" />
@@ -82,12 +82,12 @@
             </div>
 
             <QrcodeCapture
-              @detect="onDetect"
               :class="$style.uploadInupt"
               :capture="false"
               :multiple="false"
               :worker="Worker"
               title="点击上传"
+              @detect="onDetect"
             />
           </div>
         </QrcodeDropZone>
@@ -95,9 +95,9 @@
         <!-- 拍照解码 -->
         <QrcodeStream
           v-if="type === 'decodeStream'"
+          style="height: 300px"
           @decode="onDecode"
           @init="onInit"
-          style="height:300px"
         />
 
         <br />
@@ -124,13 +124,13 @@ import VRadio from 'lvan/radio'
 import VRadioGroup from 'lvan/radio/group.vue'
 import VButton from 'lvan/button'
 import VTextarea from 'lvan/textarea'
-import Worker from './modules/worker'
-import { transition } from '@/plugins/transition'
+import { transition } from '@/plugins/transition.client'
 import { urlToBlob } from '@/utils/shared'
 import Box from '@/components/box'
 import Copy from '@/components/copy'
 import Skeleton from '@/components/skeleton'
 import InputColor from '@/components/color'
+import Worker from './modules/worker'
 
 let QRCode = null
 
@@ -139,24 +139,6 @@ if (process.client) {
 }
 
 export default {
-  head() {
-    return {
-      title: '二维码编/解码 | hiweb',
-      meta: [
-        {
-          hid: 'keywords',
-          name: 'keywords',
-          content: '二维码,编码,解码'
-        },
-        {
-          hid: 'description',
-          name: 'description',
-          content: '在线二维码编/解码'
-        }
-      ]
-    }
-  },
-  transition,
   components: {
     Box,
     VRadio,
@@ -171,23 +153,23 @@ export default {
             component: import('vue-qrcode-reader').then(
               (m) => m.QrcodeDropZone
             ),
-            loading: Skeleton
+            loading: Skeleton,
           }
         : {},
     QrcodeCapture: () =>
       process.client
         ? {
             component: import('vue-qrcode-reader').then((m) => m.QrcodeCapture),
-            loading: Skeleton
+            loading: Skeleton,
           }
         : {},
     QrcodeStream: () =>
       process.client
         ? {
             component: import('vue-qrcode-reader').then((m) => m.QrcodeStream),
-            loading: Skeleton
+            loading: Skeleton,
           }
-        : {}
+        : {},
   },
   data() {
     return {
@@ -208,17 +190,17 @@ export default {
         margin: 1.5,
         color: {
           dark: '#000000',
-          light: ''
+          light: '',
         },
-        width: 200
+        width: 200,
       },
-      encodeImg: ''
+      encodeImg: '',
     }
   },
   watch: {
     type() {
       this.resetState()
-    }
+    },
   },
   mounted() {
     document.body.addEventListener('paste', this.onPaste)
@@ -338,8 +320,26 @@ export default {
 
     updateColor(colors) {
       this.encodeOptions.color.dark = colors.hex8
+    },
+  },
+  head() {
+    return {
+      title: '二维码编/解码 | hiweb',
+      meta: [
+        {
+          hid: 'keywords',
+          name: 'keywords',
+          content: '二维码,编码,解码',
+        },
+        {
+          hid: 'description',
+          name: 'description',
+          content: '在线二维码编/解码',
+        },
+      ],
     }
-  }
+  },
+  transition,
 }
 </script>
 

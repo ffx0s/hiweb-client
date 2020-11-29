@@ -12,12 +12,12 @@ export default {
   props: {
     markdown: {
       type: String,
-      default: ''
+      default: '',
     },
     change: {
       type: [Function, null],
-      default: null
-    }
+      default: null,
+    },
   },
   mounted() {
     this.removeCss = loadCSS('MuyaCSS', cdn + '/assets/muya/index.min.css?v8')
@@ -45,7 +45,7 @@ export default {
       const Muya = window.Muya.default
 
       this.editor = new Muya(this.$refs.editor, {
-        markdown: this.markdown
+        markdown: this.markdown,
       })
 
       if (this.change) {
@@ -68,8 +68,8 @@ export default {
         item.content = item.content.replace(headingSymbol, '')
       })
       return toc
-    }
-  }
+    },
+  },
 }
 </script>
 

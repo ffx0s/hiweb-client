@@ -88,8 +88,7 @@ body a {
   height: 100%;
 }
 
-.left-side,
-.right-side {
+.side {
   position: sticky;
   top: calc(var(--headerHeight) + var(--gap));
   width: var(--sideWidth);
@@ -102,10 +101,6 @@ body a {
 }
 .left-side__toggle {
   display: none;
-}
-
-.right-side {
-  margin-left: var(--gap);
 }
 
 .main {
@@ -237,10 +232,6 @@ body a {
     display: block;
     padding-top: var(--gap);
     padding-bottom: var(--gap);
-  }
-
-  .right-side {
-    display: none;
   }
   
   .custom-scrollbar {

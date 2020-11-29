@@ -22,13 +22,13 @@ export default {
   props: {
     size: {
       type: Number,
-      default: 45
+      default: 45,
     },
     active: {
       type: Boolean,
-      default: false
-    }
-  }
+      default: false,
+    },
+  },
 }
 </script>
 

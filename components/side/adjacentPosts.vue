@@ -28,14 +28,14 @@ import Box from '@/components/box'
 
 export default {
   components: {
-    Box
+    Box,
   },
   props: {
     post: {
       type: Object,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 }
 </script>
 

@@ -3,19 +3,20 @@
     <Auth>
       <div :class="$style.header">
         <ImageUpload
-          :class="$style.imageLink"
-          :imageClass="$style.image"
+          ref="uploader"
           v-model="post.poster"
+          :class="$style.imageLink"
+          :image-class="$style.image"
         />
       </div>
 
       <div :class="$style.content">
         <div :class="$style.meta">
-          <span v-once v-if="post.id">
+          <span v-if="post.id" v-once>
             <i class="icon-clock"></i>
             {{ post.created | ago }}
           </span>
-          <span v-once v-else>
+          <span v-else v-once>
             <i class="icon-clock"></i>
             刚刚
           </span>
@@ -28,8 +29,8 @@
             <DropdownItem
               v-for="category in categories"
               :key="category.id"
-              @click.native="selectCategory(category)"
               size="medium"
+              @click.native="selectCategory(category)"
             >
               {{ category.name }}
             </DropdownItem>
@@ -49,8 +50,8 @@
           >
             <i :class="[$style.iconTag, 'icon-tag']"></i>
             <i
-              @click="post.tags.splice(i, 1)"
               :class="[$style.iconCancel, 'icon-cancel-circled']"
+              @click="post.tags.splice(i, 1)"
             />
             <span>{{ tagItem }}</span>
           </a>
@@ -59,11 +60,11 @@
             <Autocomplete
               ref="autocomplete"
               v-model="tagSearchValue"
+              :input-class="$style.tagInput"
+              placeholder="输入标签"
               @search="handleSearchTag"
               @select="handleSelectTag"
               @blur="handleBlur"
-              :inputClass="$style.tagInput"
-              placeholder="输入标签"
             />
           </div>
         </div>
@@ -71,20 +72,26 @@
         <Editor ref="editor" :markdown="post.markdown" />
       </div>
     </Auth>
-    <RightSide slot="side" :save="savePost" :loading="savePostLoading" />
+    <RightSide
+      slot="side"
+      :save="savePost"
+      :save-loading="savePostLoading"
+      :change-poster="changePoster"
+      :change-poster-loading="changePosterLoading"
+    />
   </SideView>
 </template>
 
 <script>
 import gql from 'graphql-tag'
-import ImageUpload from './modules/imageUpload'
-import RightSide from './modules/rightSide'
 import Editor from '@/components/editor'
 import Auth from '@/components/auth'
 import Dropdown from '@/components/dropdown'
 import DropdownItem from '@/components/dropdown/item'
 import Autocomplete from '@/components/autocomplete'
 import SideView from '@/components/sideView'
+import RightSide from './modules/rightSide'
+import ImageUpload from './modules/imageUpload'
 
 const LOCAL_POST = 'LOCAL_POST'
 
@@ -117,16 +124,21 @@ function getTitleAndSummary(html) {
   return [title, summary]
 }
 
-function initPostData() {
+function getRandomPoster() {
+  return `https://picsum.photos/seed/${Date.now()}/1302/390`
+}
+
+function initPostData(post) {
   return {
-    poster: '',
+    poster: getRandomPoster(),
     created: Date.now(),
     tags: [],
     category: {
       id: null,
-      name: ''
+      name: '',
     },
-    markdown: ''
+    markdown: '',
+    ...post,
   }
 }
 
@@ -161,7 +173,7 @@ function getPostData(client, id) {
     .query({
       fetchPolicy: 'no-cache',
       query: POST_QUERY,
-      variables: { id }
+      variables: { id },
     })
     .then((result) => {
       return { post: result.data.post }
@@ -177,12 +189,20 @@ export default {
     Editor,
     Autocomplete,
     RightSide,
-    SideView
+    SideView,
   },
-  head() {
-    return {
-      title: '编辑文章'
+  async fetch() {
+    const id = this.$route.query.id
+    if (id && !this.post.id) {
+      const { post } = await getPostData(this.$apollo, id)
+      this.post = post
     }
+  },
+  fetchOnServer: false,
+  async asyncData({ app, query }) {
+    return query.id
+      ? await getPostData(app.apolloProvider.defaultClient, query.id)
+      : { post: initPostData(process.client ? {} : { poster: '' }) }
   },
   data() {
     return {
@@ -190,20 +210,9 @@ export default {
       categories: [],
       showCategoryMenu: false,
       savePostLoading: false,
-      tagSearchValue: ''
+      changePosterLoading: false,
+      tagSearchValue: '',
     }
-  },
-  apollo: {
-    categories: {
-      query: require('@/graphql/categories')
-    }
-  },
-  async asyncData({ app, query }) {
-    if (query.id) {
-      const data = await getPostData(app.apolloProvider.defaultClient, query.id)
-      return data
-    }
-    return { post: initPostData() }
   },
   beforeMount() {
     if (!this.$route.query.id) {
@@ -214,29 +223,11 @@ export default {
         this.post.markdown = '# \n'
       }
 
-      this.setLocalData = this.setLocalData.bind(this)
-      this.eventAction(addEventListener)
+      window.addEventListener('beforeunload', this.setLocalData)
+      this.$on('hook:beforeDestroy', () => {
+        window.removeEventListener('beforeunload', this.setLocalData)
+      })
     }
-  },
-  beforeDestroy() {
-    this.eventAction(removeEventListener)
-  },
-  beforeRouteUpdate(to, from, next) {
-    this.routeLeave(() => {
-      const id = to.query.id
-      if (id) {
-        getPostData(this.$apollo, id).then(({ post }) => {
-          this.initPageData(post)
-          next()
-        })
-      } else {
-        this.initPageData(initPostData())
-        next()
-      }
-    })
-  },
-  beforeRouteLeave(to, from, next) {
-    this.routeLeave(next)
   },
   methods: {
     routeLeave(next) {
@@ -250,30 +241,34 @@ export default {
           confirm(instance) {
             instance.done()
             next()
-          }
+          },
         })
       }
     },
-    selectCategory(category) {
-      this.post.category.id = category.id
-      this.post.category.name = category.name
+    selectCategory({ id, name }) {
+      this.post.category = { id, name }
     },
     async savePost() {
       this.savePostLoading = true
 
       const editor = this.$refs.editor
+
+      if (this.post.poster.startsWith('http')) {
+        this.$refs.uploader.uploadRemoteImage(this.post.poster)
+      }
+
       const content = await editor.getHtml()
       const [title, summary] = getTitleAndSummary(content)
       const form = {
         title,
         summary,
         content,
+        poster: this.post.poster,
+        category: this.post.category.id,
         tags: this.post.tags,
         keywords: this.post.tags.join(','),
         markdown: editor.getMarkdown(),
         toc: editor.getTOC(),
-        poster: this.post.poster,
-        category: this.post.category.id
       }
 
       if (this.post.id) {
@@ -286,14 +281,14 @@ export default {
             fetchPolicy: 'no-cache',
             mutation: require('@/graphql/addPost'),
             variables: {
-              post: form
-            }
+              post: form,
+            },
           })
           .then(({ data }) => {
             this.$toast({ type: 'success' })
             this.$router.push({
               name: 'post-id',
-              params: { id: data.createOrUpdatePost }
+              params: { id: data.createOrUpdatePost },
             })
             this.savePostLoading = false
             this.removeLocalData()
@@ -303,24 +298,36 @@ export default {
       }
     },
     checkFields(form) {
-      const requiredFields = [
-        { name: 'category', error: '请添加分类' },
-        { name: 'title', error: '请填写标题' },
-        { name: 'content', error: '请填写内容' }
+      const rules = [
+        {
+          name: 'poster',
+          validator(value) {
+            if (!value) return '请上传图片'
+            if (value.startsWith('http')) return '请等待图片上传完成'
+          },
+        },
+        { name: 'category', errMessage: '请添加分类' },
+        { name: 'title', errMessage: '请填写标题' },
+        { name: 'content', errMessage: '请填写内容' },
       ]
-      let noError = true
+      const isEmpty = (value) => !value || !value.trim()
 
-      requiredFields.find((field) => {
+      const error = rules.some((field) => {
         const value = form[field.name]
-
-        if (!value) {
-          this.$toast(field.error)
-          noError = false
+        let errMessage = ''
+        if (field.validator) {
+          errMessage = field.validator(value)
+        } else if (isEmpty(value)) {
+          errMessage = field.errMessage
         }
-        return !value
+
+        if (errMessage) {
+          this.$toast(errMessage)
+          return true
+        }
       })
 
-      return noError
+      return !error
     },
     initPageData(post) {
       this._tagCount = 0
@@ -335,14 +342,11 @@ export default {
         poster,
         category,
         tags,
-        markdown: editor ? editor.getMarkdown() : ''
+        markdown: editor ? editor.getMarkdown() : '',
       })
     },
     removeLocalData() {
       localStorage.removeItem(LOCAL_POST)
-    },
-    eventAction(action) {
-      action('beforeunload', this.setLocalData)
     },
     createTag(name) {
       if (!name.trim()) return
@@ -357,8 +361,8 @@ export default {
             fetchPolicy: 'no-cache',
             mutation: require('@/graphql/addTag'),
             variables: {
-              tag: { name }
-            }
+              tag: { name },
+            },
           })
           .then(({ data }) => {
             this.post.tags.push(name)
@@ -375,8 +379,8 @@ export default {
           fetchPolicy: 'no-cache',
           query: TAGS_QUERY,
           variables: {
-            name: value
-          }
+            name: value,
+          },
         })
         .then(({ data }) => {
           const tags = data.tags.docs.map((tag) => {
@@ -405,8 +409,48 @@ export default {
           this.createTag(event.target.value)
         }
       }, 300)
+    },
+    changePoster() {
+      this.changePosterLoading = true
+      const image = new Image()
+
+      image.onload = () => {
+        this.changePosterLoading = false
+        this.post.poster = image.src
+      }
+      image.onerror = () => {
+        this.changePosterLoading = false
+      }
+      image.src = getRandomPoster()
+    },
+  },
+  head() {
+    return {
+      title: '编辑文章',
     }
-  }
+  },
+  apollo: {
+    categories: {
+      query: require('@/graphql/categories'),
+    },
+  },
+  beforeRouteUpdate(to, from, next) {
+    this.routeLeave(() => {
+      const id = to.query.id
+      if (id) {
+        getPostData(this.$apollo, id).then(({ post }) => {
+          this.initPageData(post)
+          next()
+        })
+      } else {
+        this.initPageData(initPostData())
+        next()
+      }
+    })
+  },
+  beforeRouteLeave(to, from, next) {
+    this.routeLeave(next)
+  },
 }
 </script>
 

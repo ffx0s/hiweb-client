@@ -3,7 +3,7 @@
     <div v-if="data.poster" :class="$style.left">
       <nuxt-link :class="$style.imageLink" :to="to">
         <client-only>
-          <img :class="$style.image" v-lazy="data.poster + '!/both/186x129'" />
+          <img v-lazy="data.poster + '!/both/186x129'" :class="$style.image" />
         </client-only>
       </nuxt-link>
     </div>
@@ -47,7 +47,7 @@ export default {
   props: {
     to: {
       type: [Object, null],
-      default: null
+      default: null,
     },
     data: {
       type: Object,
@@ -58,10 +58,10 @@ export default {
         content: '',
         category: { id: null, name: '' },
         created: '',
-        tags: []
-      })
-    }
-  }
+        tags: [],
+      }),
+    },
+  },
 }
 </script>
 

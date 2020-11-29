@@ -35,7 +35,7 @@ const listToTree = (list) => {
     parent: null,
     lvl: null,
     content: null,
-    slug: null
+    slug: null,
   })
   let lastNode = null
 

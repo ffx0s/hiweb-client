@@ -8,8 +8,8 @@ export default createList({
   routeOptions(page) {
     return {
       name: 'list-page',
-      params: { page }
+      params: { page },
     }
-  }
+  },
 })
 </script>

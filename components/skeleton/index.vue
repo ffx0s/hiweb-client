@@ -1,9 +1,9 @@
 <template>
   <div :class="[$style.skeleton, $style.animate]">
-    <div :class="$style.item" style="margin-bottom: 20px; width:40%;"></div>
-    <div :class="$style.item" style="width:100%;"></div>
-    <div :class="$style.item" style="width:100%;"></div>
-    <div :class="$style.item" style="width:60%;"></div>
+    <div :class="$style.item" style="margin-bottom: 20px; width: 40%"></div>
+    <div :class="$style.item" style="width: 100%"></div>
+    <div :class="$style.item" style="width: 100%"></div>
+    <div :class="$style.item" style="width: 60%"></div>
   </div>
 </template>
 

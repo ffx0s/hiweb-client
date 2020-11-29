@@ -17,16 +17,16 @@ import AppHeader from '@/components/header'
 export default {
   components: {
     BackToTop,
-    AppHeader
+    AppHeader,
   },
   data() {
     return {
-      isMobile: false
+      isMobile: false,
     }
   },
   mounted() {
     this.isMobile = 'ontouchstart' in document
-  }
+  },
 }
 </script>
 

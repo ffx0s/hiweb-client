@@ -7,8 +7,8 @@
       </div>
     </div>
     <div
-      v-transfer-dom
       v-show="show"
+      v-transfer-dom
       :class="$style.modal"
       @click.self="show = false"
     >
@@ -27,21 +27,21 @@
 export default {
   components: {
     ColorPicker: () =>
-      process.client ? import('vue-color').then((m) => m.Sketch) : {}
+      process.client ? import('vue-color').then((m) => m.Sketch) : {},
   },
   props: {
     value: {
       type: [String, Object],
-      default: ''
-    }
+      default: '',
+    },
   },
   data() {
     return {
       show: false,
       position: {
         left: 0 + 'px',
-        top: 0 + 'px'
-      }
+        top: 0 + 'px',
+      },
     }
   },
   methods: {
@@ -63,7 +63,7 @@ export default {
 
       this.position = {
         left: x + 'px',
-        top: y + 'px'
+        top: y + 'px',
       }
       this.show = true
     },
@@ -72,8 +72,8 @@ export default {
       this.timer = setTimeout(() => {
         this.$emit('input', value)
       })
-    }
-  }
+    },
+  },
 }
 </script>
 

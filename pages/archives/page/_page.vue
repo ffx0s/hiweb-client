@@ -11,9 +11,9 @@
         v-if="archives.pages > 1"
         :prev-text="'上一页'"
         :next-text="'下一页'"
-        :pageCount="archives.pages"
+        :page-count="archives.pages"
         :initial-page="archives.page - 1"
-        :routeOptions="routeOptions"
+        :route-options="routeOptions"
         position="center"
       />
     </Box>
@@ -22,8 +22,7 @@
 
 <script>
 import gql from 'graphql-tag'
-import { transition } from '@/plugins/transition'
-import { beforeAsyncData } from '@/utils/shared'
+import { transition } from '@/plugins/transition.client'
 import Box from '@/components/box'
 import Pagination from '@/components/pagination'
 import Archive from '@/components/archive'
@@ -53,19 +52,10 @@ export default {
   components: {
     Box,
     Pagination,
-    Archive
+    Archive,
   },
   transition,
-  head() {
-    return {
-      title: '存档 | hiweb',
-      meta: [
-        { hid: 'keywords', name: 'keywords', content: '存档' },
-        { hid: 'description', name: 'description', content: '文章存档' }
-      ]
-    }
-  },
-  asyncData: beforeAsyncData(({ params, app, route }) => {
+  asyncData({ params, app, route }) {
     return app.apolloProvider.defaultClient
       .query({
         fetchPolicy: 'no-cache',
@@ -73,20 +63,29 @@ export default {
         variables: {
           limit: 5,
           page: params.page ? +params.page : 1,
-          category: params.name || ''
-        }
+          category: params.name || '',
+        },
       })
       .then((result) => {
         return { archives: result.data.archives }
       })
-  }),
+  },
   methods: {
     routeOptions(page) {
       return {
         name: this.$route.name,
-        params: { page }
+        params: { page },
       }
+    },
+  },
+  head() {
+    return {
+      title: '存档 | hiweb',
+      meta: [
+        { hid: 'keywords', name: 'keywords', content: '存档' },
+        { hid: 'description', name: 'description', content: '文章存档' },
+      ],
     }
-  }
+  },
 }
 </script>

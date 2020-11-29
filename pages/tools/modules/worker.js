@@ -11,10 +11,10 @@ const inlineWorker = (func) => {
 
 export default () => {
   /* eslint-disable no-undef */
-  return inlineWorker(function() {
+  return inlineWorker(function () {
     self.importScripts('https://assets.webfed.cn/assets/qrcode/worker.js')
 
-    self.addEventListener('message', function(event) {
+    self.addEventListener('message', function (event) {
       const imageData = event.data
       const result = jsQR(imageData.data, imageData.width, imageData.height)
 

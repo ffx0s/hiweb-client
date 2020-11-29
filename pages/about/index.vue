@@ -17,15 +17,9 @@
       <ol>
         <li>页面纯静态化，通过后台管理在线部署打包应用。</li>
         <li>Blog 基础功能（登录注册、文章、标签、分类、留言、存档等）。</li>
-        <li>
-          文章内容可视化编辑。
-        </li>
-        <li>
-          自动化构建打包，Github Actions 构建应用，内容自动上传到云存储。
-        </li>
-        <li>
-          页面响应式布局，支持移动端和PC端。
-        </li>
+        <li>文章内容可视化编辑。</li>
+        <li>自动化构建打包，Github Actions 构建应用，内容自动上传到云存储。</li>
+        <li>页面响应式布局，支持移动端和PC端。</li>
       </ol>
       <h3>源码</h3>
       <p>
@@ -44,12 +38,12 @@
 </template>
 
 <script>
-import { transition } from '@/plugins/transition'
+import { transition } from '@/plugins/transition.client'
 import Comment from '@/components/comment'
 
 export default {
   components: {
-    Comment
+    Comment,
   },
   transition,
   head() {
@@ -57,10 +51,10 @@ export default {
       title: '关于 | hiweb',
       meta: [
         { hid: 'keywords', name: 'keywords', content: '关于网站' },
-        { hid: 'description', name: 'description', content: '网站简介' }
-      ]
+        { hid: 'description', name: 'description', content: '网站简介' },
+      ],
     }
-  }
+  },
 }
 </script>
 

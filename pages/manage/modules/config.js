@@ -65,12 +65,12 @@ const config = Object.freeze([
           type: 'text',
           required: true,
           defaultValue: '',
-          rules: [{ required: true, message: '请填写分类名' }]
+          rules: [{ required: true, message: '请填写分类名' }],
         },
-        { title: '排序', field: 'sort', type: 'number', defaultValue: 0 }
-      ]
+        { title: '排序', field: 'sort', type: 'number', defaultValue: 0 },
+      ],
     },
-    removeMutation: require('@/graphql/deleteCategory')
+    removeMutation: require('@/graphql/deleteCategory'),
   },
   {
     field: 'tags',
@@ -88,12 +88,12 @@ const config = Object.freeze([
           type: 'text',
           required: true,
           defaultValue: '',
-          rules: [{ required: true, message: '请填写标签名' }]
+          rules: [{ required: true, message: '请填写标签名' }],
         },
-        { title: '排序', field: 'sort', type: 'number', defaultValue: 0 }
-      ]
+        { title: '排序', field: 'sort', type: 'number', defaultValue: 0 },
+      ],
     },
-    removeMutation: require('@/graphql/deleteTag')
+    removeMutation: require('@/graphql/deleteTag'),
   },
   {
     field: 'posts',
@@ -108,7 +108,7 @@ const config = Object.freeze([
         query.id = item.id
       }
       this.$router.push({ name: 'edit', query })
-    }
+    },
   },
   {
     field: 'comments',
@@ -117,7 +117,7 @@ const config = Object.freeze([
     variables: { limit: 13 },
     props: ['id', 'content', 'created', 'typeId', 'user.name'],
     removeMutation: require('@/graphql/deleteComment'),
-    showCreateButton: false
+    showCreateButton: false,
   },
   {
     field: 'users',
@@ -137,29 +137,29 @@ const config = Object.freeze([
           type: 'text',
           required: true,
           defaultValue: '',
-          rules: [{ required: true, message: '请填写用户名' }]
+          rules: [{ required: true, message: '请填写用户名' }],
         },
         {
           title: '昵称',
           field: 'name',
           type: 'text',
-          defaultValue: ''
+          defaultValue: '',
         },
         {
           title: '权限',
           field: 'role',
           type: 'number',
-          defaultValue: 0
+          defaultValue: 0,
         },
         {
           title: '头像',
           field: 'avatar',
           type: 'text',
-          defaultValue: ''
-        }
-      ]
-    }
-  }
+          defaultValue: '',
+        },
+      ],
+    },
+  },
 ])
 
 export function getConfig(type = 'categories') {

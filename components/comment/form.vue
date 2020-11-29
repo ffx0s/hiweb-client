@@ -9,9 +9,9 @@
           :class="[$style.input, target.user.name && $style.replyState]"
           placeholder="说点什么..."
         />
-        <div :class="$style.tag" v-if="target.user.name">
+        <div v-if="target.user.name" :class="$style.tag">
           @{{ target.user.name }}
-          <i @click="removeTarget" class="icon-cancel-circled" />
+          <i class="icon-cancel-circled" @click="removeTarget" />
         </div>
       </div>
     </div>
@@ -28,9 +28,9 @@
         <VButton
           :disabled="!me || !form.content.trim()"
           :loading="loading"
-          @click="addComment(mutate)"
           type="primary"
           small
+          @click="addComment(mutate)"
         >
           {{ target.user.name ? '回复Ta' : '发送评论' }}
         </VButton>
@@ -48,19 +48,19 @@ export default {
   components: {
     Avatar,
     VButton,
-    VTextarea
+    VTextarea,
   },
   inject: ['type', 'typeId'],
   props: {
     me: {
       type: Object,
-      default: () => {}
+      default: () => {},
     },
     // 如果是回复别人的评论，需要将被评论对象的数据传递过来
     target: {
       type: Object,
-      default: () => {}
-    }
+      default: () => {},
+    },
   },
   data() {
     return {
@@ -69,8 +69,8 @@ export default {
         typeId: this.typeId,
         content: '',
         parentId: null,
-        to: null
-      }
+        to: null,
+      },
     }
   },
   methods: {
@@ -93,7 +93,7 @@ export default {
       const query = require('@/graphql/comments')
       const variables = {
         type: this.type,
-        ...variablesOptions
+        ...variablesOptions,
       }
       const data = store.readQuery({ query, variables })
       const newData = update(data)
@@ -146,8 +146,8 @@ export default {
                   limit: 10,
                   page: null,
                   pages: null,
-                  __typename: 'CommentConnection'
-                }
+                  __typename: 'CommentConnection',
+                },
               }
             }
           }
@@ -159,8 +159,8 @@ export default {
       this.removeTarget()
       this.$toast({ type: 'success' })
       this.$emit('success', updateList)
-    }
-  }
+    },
+  },
 }
 </script>
 

@@ -3,19 +3,19 @@
     <input
       ref="input"
       v-bind="$attrs"
-      @focus="handleFocus"
-      @blur="handleBlur"
-      @input="handleInput"
       :value="value"
       type="text"
       placeholder=""
+      @focus="handleFocus"
+      @blur="handleBlur"
+      @input="handleInput"
     />
     <div>
       <svg>
         <use xlink:href="#search-icon-path" />
       </svg>
     </div>
-    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
       <symbol
         id="search-icon-path"
         xmlns="http://www.w3.org/2000/svg"
@@ -35,17 +35,17 @@ export default {
   inheritAttrs: false,
   model: {
     prop: 'value',
-    event: 'change'
+    event: 'change',
   },
   props: {
     value: {
       type: String,
-      default: ''
+      default: '',
     },
     active: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   methods: {
     handleFocus(event) {
@@ -67,8 +67,8 @@ export default {
     },
     emitBlur() {
       this.$refs.input.blur()
-    }
-  }
+    },
+  },
 }
 </script>
 

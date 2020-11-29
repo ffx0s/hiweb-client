@@ -11,7 +11,7 @@ export function formatDate(date, template) {
   return date
     .toISOString()
     .split(/[-:.TZ]/)
-    .reduce(function(template, item, i) {
+    .reduce(function (template, item, i) {
       return template.split(specs[i]).join(item)
     }, template)
 }

@@ -2,8 +2,8 @@
   <div :class="$style.copy">
     <span
       v-show="copySuccess === undefined"
-      @click="copyText"
       :class="$style.primary"
+      @click="copyText"
     >
       {{ defaultMessage }}
     </span>
@@ -23,25 +23,25 @@ export default {
   props: {
     value: {
       type: [String, Number],
-      default: ''
+      default: '',
     },
     defaultMessage: {
       type: String,
-      default: '复制'
+      default: '复制',
     },
     successMessage: {
       type: String,
-      default: '复制成功'
+      default: '复制成功',
     },
     errorMessage: {
       type: String,
-      default: '复制失败'
-    }
+      default: '复制失败',
+    },
   },
   data() {
     return {
       copySuccess: undefined,
-      message: this.defaultMessage
+      message: this.defaultMessage,
     }
   },
   methods: {
@@ -61,8 +61,8 @@ export default {
             this.message = this.defaultMessage
           }, 1000)
         })
-    }
-  }
+    },
+  },
 }
 </script>
 

@@ -8,7 +8,7 @@ import Error from '@/layouts/error'
 
 export default {
   components: {
-    Error
-  }
+    Error,
+  },
 }
 </script>

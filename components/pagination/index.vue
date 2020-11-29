@@ -5,10 +5,10 @@
       :class="[pageClass, firstPageSelected() ? disabledClass : '']"
     >
       <a
-        @click="selectFirstPage()"
-        @keyup.enter="selectFirstPage()"
         :class="pageLinkClass"
         :tabindex="firstPageSelected() ? -1 : 0"
+        @click="selectFirstPage()"
+        @keyup.enter="selectFirstPage()"
         >{{ firstButtonText }}</a
       >
     </li>
@@ -16,22 +16,22 @@
     <li v-if="!firstPageSelected()" :class="[prevClass]">
       <nuxt-link
         :to="routeOptions(selected)"
-        @click="prevPage()"
-        @keyup.enter="prevPage()"
         :class="prevLinkClass"
         :tabindex="firstPageSelected() ? -1 : 0"
+        @click="prevPage()"
+        @keyup.enter="prevPage()"
         ><slot name="prevContent">{{ prevText }}</slot></nuxt-link
       >
     </li>
 
     <li
-      :key="index"
       v-for="(page, index) in pages"
+      :key="index"
       :class="[
         pageClass,
         page.selected ? activeClass : '',
         page.disabled ? disabledClass : '',
-        page.breakView ? breakViewClass : ''
+        page.breakView ? breakViewClass : '',
       ]"
     >
       <span v-if="page.breakView" :class="[pageLinkClass, breakViewLinkClass]"
@@ -41,12 +41,12 @@
         page.content
       }}</span>
       <nuxt-link
-        :to="routeOptions(page.index + 1)"
         v-else
-        @click="handlePageSelected(page.index)"
-        @keyup.enter="handlePageSelected(page.index)"
+        :to="routeOptions(page.index + 1)"
         :class="pageLinkClass"
         tabindex="0"
+        @click="handlePageSelected(page.index)"
+        @keyup.enter="handlePageSelected(page.index)"
         >{{ page.content }}</nuxt-link
       >
     </li>
@@ -57,10 +57,10 @@
     >
       <nuxt-link
         :to="routeOptions(selected + 2)"
-        @click="nextPage()"
-        @keyup.enter="nextPage()"
         :class="nextLinkClass"
         :tabindex="lastPageSelected() ? -1 : 0"
+        @click="nextPage()"
+        @keyup.enter="nextPage()"
         ><slot name="nextContent">{{ nextText }}</slot></nuxt-link
       >
     </li>
@@ -70,10 +70,10 @@
       :class="[pageClass, lastPageSelected() ? disabledClass : '']"
     >
       <a
-        @click="selectLastPage()"
-        @keyup.enter="selectLastPage()"
         :class="pageLinkClass"
         :tabindex="lastPageSelected() ? -1 : 0"
+        @click="selectLastPage()"
+        @keyup.enter="selectLastPage()"
         >{{ lastButtonText }}</a
       >
     </li>
@@ -85,121 +85,121 @@ export default {
   props: {
     pageCount: {
       type: Number,
-      required: true
+      required: true,
     },
     initialPage: {
       type: Number,
-      default: 0
+      default: 0,
     },
     forcePage: {
       type: Number,
-      default: undefined
+      default: undefined,
     },
     clickHandler: {
       type: Function,
-      default: () => {}
+      default: () => {},
     },
     pageRange: {
       type: Number,
-      default: 3
+      default: 3,
     },
     marginPages: {
       type: Number,
-      default: 1
+      default: 1,
     },
     prevText: {
       type: String,
-      default: 'Prev'
+      default: 'Prev',
     },
     nextText: {
       type: String,
-      default: 'Next'
+      default: 'Next',
     },
     breakViewText: {
       type: String,
-      default: '…'
+      default: '…',
     },
     containerClass: {
       type: String,
-      default: 'pagination'
+      default: 'pagination',
     },
     pageClass: {
       type: String,
-      default: ''
+      default: '',
     },
     pageLinkClass: {
       type: String,
-      default: ''
+      default: '',
     },
     prevClass: {
       type: String,
-      default: ''
+      default: '',
     },
     prevLinkClass: {
       type: String,
-      default: ''
+      default: '',
     },
     nextClass: {
       type: String,
-      default: ''
+      default: '',
     },
     nextLinkClass: {
       type: String,
-      default: ''
+      default: '',
     },
     breakViewClass: {
       type: String,
-      default: ''
+      default: '',
     },
     breakViewLinkClass: {
       type: String,
-      default: ''
+      default: '',
     },
     activeClass: {
       type: String,
-      default: 'active'
+      default: 'active',
     },
     disabledClass: {
       type: String,
-      default: 'disabled'
+      default: 'disabled',
     },
     firstLastButton: {
       type: Boolean,
-      default: false
+      default: false,
     },
     firstButtonText: {
       type: String,
-      default: 'First'
+      default: 'First',
     },
     lastButtonText: {
       type: String,
-      default: 'Last'
+      default: 'Last',
     },
     hidePrevNext: {
       type: Boolean,
-      default: false
+      default: false,
     },
     position: {
       type: String,
-      default: ''
+      default: '',
     },
     routeName: {
       type: String,
-      default: ''
+      default: '',
     },
     routeOptions: {
       type: Function,
       default(page) {
         return {
           name: this.$route.name,
-          params: { page }
+          params: { page },
         }
-      }
-    }
+      },
+    },
   },
   data() {
     return {
-      selected: this.initialPage
+      selected: this.initialPage,
     }
   },
   computed: {
@@ -210,7 +210,7 @@ export default {
           const page = {
             index,
             content: index + 1,
-            selected: index === this.selected
+            selected: index === this.selected,
           }
           items[index] = page
         }
@@ -220,14 +220,14 @@ export default {
           const page = {
             index,
             content: index + 1,
-            selected: index === this.selected
+            selected: index === this.selected,
           }
           items[index] = page
         }
         const setBreakView = (index) => {
           const breakView = {
             disabled: true,
-            breakView: true
+            breakView: true,
           }
           items[index] = breakView
         }
@@ -270,7 +270,7 @@ export default {
         }
       }
       return items
-    }
+    },
   },
   beforeUpdate() {
     if (this.forcePage === undefined) return
@@ -314,8 +314,8 @@ export default {
       const options = { name: this.routeName, params: { page: index + 1 } }
 
       return options
-    }
-  }
+    },
+  },
 }
 </script>
 

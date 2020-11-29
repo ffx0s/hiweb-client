@@ -21,21 +21,21 @@ const meQuery = require('@/graphql/me')
 export default {
   components: {
     Dropdown,
-    DropdownItem
+    DropdownItem,
   },
   props: {
     skipQuery: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   apollo: {
     me: {
       query: meQuery,
       skip() {
         return this.skipQuery
-      }
-    }
+      },
+    },
   },
   methods: {
     loginOut() {
@@ -44,11 +44,11 @@ export default {
         update: (store) => {
           store.writeQuery({
             query: meQuery,
-            data: { me: null }
+            data: { me: null },
           })
-        }
+        },
       })
-    }
-  }
+    },
+  },
 }
 </script>

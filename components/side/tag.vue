@@ -23,22 +23,22 @@ const TAGS_QUERY = gql`
 export default {
   components: {
     Box,
-    Tags
+    Tags,
   },
   data() {
     return {
       tags: {
-        docs: []
-      }
+        docs: [],
+      },
     }
   },
   apollo: {
     tags: {
       query: TAGS_QUERY,
       variables: {
-        limit: 20
-      }
-    }
-  }
+        limit: 20,
+      },
+    },
+  },
 }
 </script>

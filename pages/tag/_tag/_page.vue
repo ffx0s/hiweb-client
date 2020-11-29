@@ -12,8 +12,8 @@ export default createList({
   routeOptions(page) {
     return {
       name: 'tag-tag-page',
-      params: { page, tag: this.$route.params.tag }
+      params: { page, tag: this.$route.params.tag },
     }
-  }
+  },
 })
 </script>

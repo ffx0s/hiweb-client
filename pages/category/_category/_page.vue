@@ -12,8 +12,8 @@ export default createList({
   routeOptions(page) {
     return {
       name: 'category-category-page',
-      params: { page, category: this.$route.params.category }
+      params: { page, category: this.$route.params.category },
     }
-  }
+  },
 })
 </script>

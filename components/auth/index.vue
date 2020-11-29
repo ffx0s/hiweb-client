@@ -1,6 +1,6 @@
 <template>
   <!-- eslint-disable-next-line vue/require-component-is -->
-  <component v-bind="$attrs" :is="tag">
+  <component :is="tag" v-bind="$attrs">
     <client-only>
       <slot v-if="isAdmin" />
       <Error
@@ -16,27 +16,27 @@ import Error from '@/layouts/error'
 
 export default {
   components: {
-    Error
+    Error,
   },
   inheritAttrs: false,
   props: {
     tag: {
       type: String,
-      default: 'div'
+      default: 'div',
     },
     showError: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   data() {
     return {
-      isAdmin: null
+      isAdmin: null,
     }
   },
   async mounted() {
     const result = await this.$apollo.query({
-      query: require('@/graphql/me')
+      query: require('@/graphql/me'),
     })
     const me = result.data.me
 
@@ -46,6 +46,6 @@ export default {
       this.isAdmin = false
     }
     this.$emit('auth', this.isAdmin)
-  }
+  },
 }
 </script>

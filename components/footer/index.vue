@@ -10,7 +10,7 @@
     >
       <img
         src="https://static.webfed.cn/FhE1nMKn4F-CKlMhoyMqvHSDEUMz"
-        style="width: 50px;vertical-align: -3px;"
+        style="width: 50px; vertical-align: -3px"
       />
     </a>
   </div>

@@ -9,14 +9,14 @@ export default {
   props: {
     src: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
   data() {
     return {
-      defaultSrc: '/user/default-user-image.png!/fw/100'
+      defaultSrc: '/user/default-user-image.png!/fw/100',
     }
-  }
+  },
 }
 </script>
 

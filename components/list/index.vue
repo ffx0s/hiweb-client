@@ -13,9 +13,9 @@
       v-if="data.pages > 1 && data.docs.length"
       :prev-text="'上一页'"
       :next-text="'下一页'"
-      :pageCount="data.pages"
+      :page-count="data.pages"
       :initial-page="data.page - 1"
-      :routeOptions="routeOptions"
+      :route-options="routeOptions"
       position="center"
     />
 
@@ -50,22 +50,22 @@ export default {
     Archive,
     Tag,
     AppFooter,
-    SideView
+    SideView,
   },
   props: {
     data: {
       type: Object,
-      required: true
+      required: true,
     },
     routeOptions: {
       type: Function,
       default(page) {
         return {
           name: this.$route.name,
-          params: { page }
+          params: { page },
         }
-      }
-    }
-  }
+      },
+    },
+  },
 }
 </script>

@@ -8,26 +8,26 @@
       name="input"
     >
       <input
+        v-model="currentValue"
         v-bind="$attrs"
+        :class="inputClass || $style.inputClass"
+        type="text"
         @input="input"
         @keyup="keyup"
         @focus="focus"
         @blur="blur"
-        v-model="currentValue"
-        :class="inputClass || $style.inputClass"
-        type="text"
       />
     </slot>
 
     <div :class="[$style.content, show && $style.show, listClass]">
-      <div :class="[$style.status, 'v-text-regular']" v-if="loading">
+      <div v-if="loading" :class="[$style.status, 'v-text-regular']">
         <Loading size="18" />
       </div>
-      <div :class="[$style.status, 'v-color-error']" v-else-if="errorMessage">
+      <div v-else-if="errorMessage" :class="[$style.status, 'v-color-error']">
         <i class="icon-attention-circled" />
         {{ errorMessage }}
       </div>
-      <div :class="[$style.status, 'v-text-regular']" v-else-if="empty">
+      <div v-else-if="empty" :class="[$style.status, 'v-text-regular']">
         <slot name="empty">
           <i class="icon-attention-circled" />&nbsp;无结果
         </slot>
@@ -53,26 +53,26 @@ import Loading from 'lvan/loading'
 
 export default {
   components: {
-    Loading
+    Loading,
   },
   inheritAttrs: false,
   props: {
     value: {
       type: [String, Number],
-      default: ''
+      default: '',
     },
     inputClass: {
       type: String,
-      default: ''
+      default: '',
     },
     delay: {
       type: Number,
-      default: 300
+      default: 300,
     },
     listClass: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
   data() {
     return {
@@ -80,7 +80,7 @@ export default {
       errorMessage: '',
       loading: false,
       list: [],
-      index: null
+      index: null,
     }
   },
   computed: {
@@ -90,11 +90,11 @@ export default {
       },
       set(value) {
         this.$emit('input', value)
-      }
+      },
     },
     empty() {
       return !this.list.length
-    }
+    },
   },
   methods: {
     input(event) {
@@ -163,8 +163,8 @@ export default {
     blur(event) {
       this.show = false
       this.$emit('blur', event)
-    }
-  }
+    },
+  },
 }
 </script>
 

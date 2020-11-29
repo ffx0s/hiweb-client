@@ -1,10 +1,10 @@
 <template>
   <div :class="$style.card">
-    <div :class="$style.header" v-if="data.poster">
+    <div v-if="data.poster" :class="$style.header">
       <!-- eslint-disable-next-line vue/require-component-is -->
       <component :is="tag" :class="$style.imageLink" :to="to">
         <client-only>
-          <img :class="$style.image" v-lazy="data.poster" />
+          <img v-lazy="data.poster" :class="$style.image" />
         </client-only>
       </component>
     </div>
@@ -45,12 +45,12 @@
         </h4>
         <div :class="$style.body">{{ data.summary }}...</div>
       </template>
-
+      <!-- eslint-disable vue/no-v-html -->
       <div
-        :class="[$style.body, 'markdown-body']"
         v-else-if="data.content"
-        v-html="data.content"
+        :class="[$style.body, 'markdown-body']"
         @click="showImageViewer"
+        v-html="data.content"
       />
 
       <slot />
@@ -67,7 +67,7 @@ import ImageViewer from 'lvan/imageViewer'
 
 export default {
   components: {
-    ImageViewer
+    ImageViewer,
   },
   props: {
     data: {
@@ -79,18 +79,18 @@ export default {
         content: '',
         category: { id: null, name: '' },
         created: '',
-        tags: []
-      })
+        tags: [],
+      }),
     },
     to: {
       type: [Object, null],
-      default: null
-    }
+      default: null,
+    },
   },
   data() {
     return {
       tag: this.to ? 'nuxt-link' : 'div',
-      images: []
+      images: [],
     }
   },
   methods: {
@@ -109,7 +109,7 @@ export default {
               alt: el.alt,
               thumbnail: el.src,
               w: el.naturalWidth,
-              h: el.naturalHeight
+              h: el.naturalHeight,
             })
           })
 
@@ -122,8 +122,8 @@ export default {
           this.$refs.viewer.show({ index, selector })
         })
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

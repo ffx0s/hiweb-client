@@ -7,7 +7,7 @@
     </div>
 
     <p class="description">
-      <Login :skipQuery="skipQuery" v-if="error.statusCode === 401" />
+      <Login v-if="error.statusCode === 401" :skip-query="skipQuery" />
       <slot v-else>
         <nuxt-link :to="{ name: 'index' }" class="v-text-regular">
           返回首页
@@ -22,33 +22,33 @@ import Login from '@/components/login'
 
 export default {
   components: {
-    Login
+    Login,
   },
   props: {
     iconClass: {
       type: String,
-      default: 'icon-attention-circled'
+      default: 'icon-attention-circled',
     },
     message: {
       type: Object,
       default: () => ({
         401: '无权限访问, 请登录/切换用户',
-        404: '页面不存在或者已被删除'
-      })
+        404: '页面不存在或者已被删除',
+      }),
     },
     error: {
       type: Object,
-      default: () => ({})
-    }
+      default: () => ({}),
+    },
   },
   data() {
     return {
-      skipQuery: true
+      skipQuery: true,
     }
   },
   mounted() {
     this.skipQuery = false
-  }
+  },
 }
 </script>
 

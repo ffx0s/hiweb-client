@@ -10,7 +10,7 @@
             条评论
           </p>
           <p v-else class="v-text-primary">评论</p>
-          <Login :skipQuery="skipQuery" />
+          <Login :skip-query="skipQuery" />
         </div>
         <!-- 添加/回复评论 -->
         <CommentForm
@@ -25,11 +25,11 @@
       <!-- 评论列表 -->
       <InfiniteScroll
         v-model="$apollo.queries.comments.loading"
-        :pullRefresh="false"
+        :pull-refresh="false"
         :empty="comments && !comments.total"
         :finished="comments && offset >= comments.total - comments.limit"
         :failed="failed"
-        :loadingClass="$style.loading"
+        :loading-class="$style.loading"
         :class="$style.list"
         @load="load"
       >
@@ -43,8 +43,8 @@
               v-for="item in comments.docs"
               :key="item.id"
               :data="item"
-              @reply="reply"
               class="list-item"
+              @reply="reply"
             />
           </template>
         </transition-group>
@@ -57,9 +57,9 @@
 
 <script>
 import InfiniteScroll from 'lvan/infiniteScroll'
+import Login from '@/components/login'
 import CommentItem from './item'
 import CommentForm from './form'
-import Login from '@/components/login'
 
 const initOffset = 0
 const limit = 10
@@ -69,23 +69,23 @@ export default {
     Login,
     CommentItem,
     CommentForm,
-    InfiniteScroll
+    InfiniteScroll,
   },
   provide() {
     return {
       type: this.type,
-      typeId: this.typeId
+      typeId: this.typeId,
     }
   },
   props: {
     type: {
       type: String,
-      required: true
+      required: true,
     },
     typeId: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   apollo: {
     comments: {
@@ -97,7 +97,7 @@ export default {
           limit,
           type: this.type,
           typeId: this.typeId,
-          offset: initOffset
+          offset: initOffset,
         }
       },
       skip() {
@@ -105,14 +105,14 @@ export default {
       },
       error(error) {
         this.failure(error)
-      }
+      },
     },
     me: {
       query: require('@/graphql/me'),
       skip() {
         return this.skipQuery
-      }
-    }
+      },
+    },
   },
   data() {
     return {
@@ -120,7 +120,7 @@ export default {
       skipQuery: true,
       failed: false,
       target: { user: {} },
-      transitionName: ''
+      transitionName: '',
     }
   },
   methods: {
@@ -136,7 +136,7 @@ export default {
           .fetchMore({
             // 新的变量
             variables: {
-              offset: this.failed ? this.offset : (this.offset += limit)
+              offset: this.failed ? this.offset : (this.offset += limit),
             },
             // 用新数据转换之前的结果
             updateQuery: (previousResult, { fetchMoreResult }) => {
@@ -148,10 +148,10 @@ export default {
               return {
                 comments: {
                   docs,
-                  ...comments
-                }
+                  ...comments,
+                },
               }
-            }
+            },
           })
           .catch(this.failure)
       }
@@ -175,8 +175,8 @@ export default {
           this.transitionName = ''
         }, 1000)
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

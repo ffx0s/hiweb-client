@@ -6,7 +6,7 @@
           {{ item.label }}
         </a>
         <!-- 只显示二级，暂时写死 -->
-        <ul :class="$style.tree" v-if="item.children[0]">
+        <ul v-if="item.children[0]" :class="$style.tree">
           <li
             v-for="(cildrenItem, cildrenItemIndex) in item.children"
             :key="cildrenItemIndex"
@@ -27,13 +27,13 @@ import { listToTree } from '@/utils/editor'
 
 export default {
   components: {
-    Box
+    Box,
   },
   props: {
     tocs: {
       type: Array,
-      default: () => []
-    }
+      default: () => [],
+    },
   },
   computed: {
     tree() {
@@ -41,8 +41,8 @@ export default {
       return this.tocs.length > 1
         ? listToTree(this.tocs.slice(1, this.tocs.length))
         : []
-    }
-  }
+    },
+  },
 }
 </script>
 

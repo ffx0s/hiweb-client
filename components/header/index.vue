@@ -3,16 +3,16 @@
     <div :class="[$style.inner, 'wrapper']">
       <div :class="$style.left">
         <!-- logo -->
-        <nuxt-link :class="[$style.logo, 'logo']" to="/" exact title="hiweb" />
+        <nuxt-link :class="$style.logo" to="/" exact title="hiweb" />
         <i
-          @click="toggleTheme('')"
           class="theme-icon icon-sun-inv"
           title="亮色主题"
+          @click="toggleTheme('')"
         />
         <i
-          @click="toggleTheme('theme--dark')"
           class="theme-icon icon-moon"
           title="暗色主题"
+          @click="toggleTheme('theme--dark')"
         />
       </div>
 
@@ -20,9 +20,9 @@
       <nav :class="$style.nav">
         <nuxt-link :class="$style.navItem" to="/" exact>首页</nuxt-link>
         <nuxt-link
-          :class="$style.navItem"
           v-for="category in categories"
           :key="category.id"
+          :class="$style.navItem"
           :to="`/category/${category.name}/`"
         >
           {{ category.name }}
@@ -30,36 +30,34 @@
         <nuxt-link :class="$style.navItem" to="/archives/page/1/">
           存档
         </nuxt-link>
-        <nuxt-link :class="$style.navItem" to="/about/">
-          关于
-        </nuxt-link>
-        <Auth
-          :showError="false"
+        <nuxt-link :class="$style.navItem" to="/about/"> 关于 </nuxt-link>
+        <VAuth
+          :show-error="false"
           :class="$style.navItem"
           tag="nuxt-link"
           to="/manage/"
         >
           管理
-        </Auth>
+        </VAuth>
       </nav>
 
       <!-- right -->
       <div :class="$style.right">
         <Autocomplete
+          :list-class="$style.searchResult"
           @search="handleSearch"
           @select="handleSelect"
-          :listClass="$style.searchResult"
         >
           <template v-slot:input="{ input, keyup, focus, blur }">
             <Search
               ref="searchInput"
               v-model="searchValue"
+              :active="searchActive"
               @input="input"
               @keyup.native="keyup"
               @focus="focus"
               @blur="blur"
               @active="(active) => (searchActive = active)"
-              :active="searchActive"
             />
           </template>
         </Autocomplete>
@@ -78,7 +76,7 @@
 <script>
 import gql from 'graphql-tag'
 import Autocomplete from '@/components/autocomplete'
-import Auth from '@/components/auth'
+import VAuth from '@/components/auth'
 import HamIcon from '@/components/hamIcon'
 import Search from '@/components/search'
 
@@ -100,27 +98,27 @@ const POSTS_QUERY = gql`
 export default {
   components: {
     Autocomplete,
-    Auth,
+    VAuth,
     HamIcon,
-    Search
+    Search,
   },
   data() {
     return {
       categories: [],
       searchValue: '',
       menuActive: false,
-      searchActive: false
+      searchActive: false,
     }
   },
   computed: {
     showDrawer() {
       return this.$store.state.showDrawer
-    }
+    },
   },
   apollo: {
     categories: {
-      query: require('@/graphql/categories')
-    }
+      query: require('@/graphql/categories'),
+    },
   },
   beforeMount() {
     this.lastThemeName = localStorage.THEME
@@ -132,8 +130,8 @@ export default {
           fetchPolicy: 'no-cache',
           query: POSTS_QUERY,
           variables: {
-            title: value
-          }
+            title: value,
+          },
         })
         .then(({ data }) => {
           const posts = data.posts.docs.map((post) => {
@@ -162,8 +160,8 @@ export default {
     },
     handleMenuClick() {
       this.$store.commit('showDrawer', !this.showDrawer)
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -192,6 +190,9 @@ export default {
   width: 100%;
   height: 100%;
   background-color: var(--primary);
+  mask-image: url('~assets/images/logo.svg');
+  mask-repeat: no-repeat;
+  mask-size: contain;
 }
 
 .nav {
@@ -217,7 +218,7 @@ export default {
 }
 
 .searchResult {
-  width: 250px;
+  width: 250px !important;
 }
 
 .menuIcon {

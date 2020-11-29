@@ -1,19 +1,18 @@
 <template>
   <SideView style="padding-top: 0">
     <Card :data="post" />
-    <Comment :typeId="$route.params.id" type="POST" />
-    <RightSide slot="side" :adjacentPosts="adjacentPosts" :toc="post.toc" />
+    <Comment :type-id="$route.params.id" type="POST" />
+    <RightSide slot="side" :adjacent-posts="adjacentPosts" :toc="post.toc" />
   </SideView>
 </template>
 
 <script>
 import gql from 'graphql-tag'
-import RightSide from './modules/rightSide'
 import SideView from '@/components/sideView'
 import Card from '@/components/cards/c1'
 import Comment from '@/components/comment'
-import { beforeAsyncData } from '@/utils/shared'
-import { transition } from '@/plugins/transition'
+import { transition } from '@/plugins/transition.client'
+import RightSide from './modules/rightSide'
 
 const postQuery = gql`
   query getPost($id: ID!) {
@@ -55,33 +54,16 @@ export default {
     Card,
     Comment,
     SideView,
-    RightSide
+    RightSide,
   },
   transition,
-  head() {
-    return {
-      title: this.post.title + ' | hiweb',
-      meta: [
-        {
-          hid: 'keywords',
-          name: 'keywords',
-          content: this.post.keywords
-        },
-        {
-          hid: 'description',
-          name: 'description',
-          content: this.post.summary
-        }
-      ]
-    }
-  },
   // 使用 apollo 选项加载数据在客户端会先渲染该路由后再加载数据，所以改用 asyncData
-  asyncData: beforeAsyncData(({ params, app }) => {
+  asyncData({ params, app }) {
     return app.apolloProvider.defaultClient
       .query({
         fetchPolicy: 'no-cache',
         query: postQuery,
-        variables: { id: params.id }
+        variables: { id: params.id },
       })
       .then(({ data }) => {
         data.post.content = data.post.content.replace(
@@ -90,9 +72,26 @@ export default {
         )
         return {
           post: data.post,
-          adjacentPosts: data.adjacentPosts
+          adjacentPosts: data.adjacentPosts,
         }
       })
-  })
+  },
+  head() {
+    return {
+      title: this.post.title + ' | hiweb',
+      meta: [
+        {
+          hid: 'keywords',
+          name: 'keywords',
+          content: this.post.keywords,
+        },
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.post.summary,
+        },
+      ],
+    }
+  },
 }
 </script>

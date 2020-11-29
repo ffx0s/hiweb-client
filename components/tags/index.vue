@@ -5,7 +5,7 @@
       :key="i"
       :to="`/tag/${encodeURIComponent(tag.name)}/`"
       :class="$style.item"
-      :activeClass="$style.active"
+      :active-class="$style.active"
     >
       {{ tag.name }}
     </nuxt-link>
@@ -17,9 +17,9 @@ export default {
   props: {
     tags: {
       type: Array,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 }
 </script>
 

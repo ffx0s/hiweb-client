@@ -29,7 +29,7 @@ import Drawer from 'lvan/drawer'
 
 export default {
   components: {
-    Drawer
+    Drawer,
   },
   computed: {
     showDrawer: {
@@ -38,13 +38,13 @@ export default {
       },
       set(value) {
         this.$store.commit('showDrawer', value)
-      }
-    }
+      },
+    },
   },
   apollo: {
     categories: {
-      query: require('@/graphql/categories')
-    }
+      query: require('@/graphql/categories'),
+    },
   },
   methods: {
     handleClick(event) {
@@ -53,8 +53,8 @@ export default {
           this.showDrawer = false
         }, 500)
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

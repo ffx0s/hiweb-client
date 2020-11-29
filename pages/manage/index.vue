@@ -1,5 +1,5 @@
 <template>
-  <Auth :class="$style.manage" @auth="auth">
+  <VAuth :class="$style.manage" @auth="auth">
     <div class="row-between">
       <div>
         <Dropdown v-model="showMenu" :title="title" click align="right">
@@ -15,17 +15,17 @@
         </Dropdown>
         &#12288;
         <VButton
-          @click="handleEdit"
           v-show="showCreateButton"
           type="primary"
           small
+          @click="handleEdit"
         >
           添加{{ title }}
         </VButton>
       </div>
 
       <div>
-        <VButton :loading="building" @click="handleBuild" type="warning" small>
+        <VButton :loading="building" type="warning" small @click="handleBuild">
           构建&部署
         </VButton>
         &nbsp;
@@ -50,18 +50,18 @@
             <td v-for="(value, name) in item" :key="name">{{ value }}</td>
             <td>
               <VButton
-                @click="handleEdit(item, i)"
                 v-show="showEditButton"
                 type="primary"
                 small
+                @click="handleEdit(item, i)"
               >
                 编辑
               </VButton>
               <VButton
-                @click="handleRemove(item, i)"
                 v-show="showRemoveButton"
                 type="error"
                 small
+                @click="handleRemove(item, i)"
               >
                 删除
               </VButton>
@@ -73,30 +73,30 @@
 
     <Pagination
       v-if="query.pages > 1 && items.length"
-      :forcePage="forcePage"
+      :force-page="forcePage"
       :prev-text="'上一页'"
       :next-text="'下一页'"
-      :pageCount="query.pages"
+      :page-count="query.pages"
       :initial-page="query.page - 1"
-      :routeOptions="routeOptions"
+      :route-options="routeOptions"
       position="right"
     />
 
     <EditModal ref="editModal" @success="editSuccess" />
-  </Auth>
+  </VAuth>
 </template>
 
 <script>
 import VButton from 'lvan/button'
 import gql from 'graphql-tag'
-import config, { getConfig } from './modules/config'
-import EditModal from './modules/editModal'
 import { githubRepoUrl } from '@/config'
-import Auth from '@/components/auth'
+import VAuth from '@/components/auth'
 import Dropdown from '@/components/dropdown'
 import DropdownItem from '@/components/dropdown/item'
 import Pagination from '@/components/pagination'
 import { formatDate } from '@/utils/filters'
+import EditModal from './modules/editModal'
+import config, { getConfig } from './modules/config'
 
 function getValue(obj, key) {
   return key.split('.').reduce((o, i) => (o ? o[i] : null), obj)
@@ -105,17 +105,12 @@ function getValue(obj, key) {
 export default {
   layout: 'base',
   components: {
-    Auth,
+    VAuth,
     Dropdown,
     DropdownItem,
     VButton,
     Pagination,
-    EditModal
-  },
-  head() {
-    return {
-      title: '管理 | hiweb'
-    }
+    EditModal,
   },
   data() {
     return {
@@ -125,21 +120,15 @@ export default {
       items: [],
       query: {
         page: 0,
-        pages: 0
+        pages: 0,
       },
       forcePage: undefined,
       total: 0,
       showEditButton: false,
       showRemoveButton: false,
       showCreateButton: false,
-      building: false
+      building: false,
     }
-  },
-  beforeRouteUpdate(to, from, next) {
-    const page = +to.query.page
-    this.forcePage = page - 1
-    this.getData(to.query.type, { page })
-    next()
   },
   methods: {
     auth(isAdmin) {
@@ -148,7 +137,7 @@ export default {
         if (!type) {
           this.$router.replace({
             name: 'manage',
-            query: { type: 'posts', page: 1 }
+            query: { type: 'posts', page: 1 },
           })
         } else {
           this.getData(type, { page: +this.$route.query.page })
@@ -168,13 +157,13 @@ export default {
         removeMutation,
         showEditButton = true,
         showCreateButton = true,
-        showRemoveButton = true
+        showRemoveButton = true,
       } = getConfig(type)
 
       const result = await this.$apollo.query({
         fetchPolicy: 'no-cache',
         query,
-        variables: { ...variables, ...vars }
+        variables: { ...variables, ...vars },
       })
 
       this.title = name
@@ -219,7 +208,7 @@ export default {
     routeOptions(page) {
       return {
         name: this.$route.name,
-        query: { type: this.$route.query.type, page }
+        query: { type: this.$route.query.type, page },
       }
     },
     handleEdit(item, i) {
@@ -248,8 +237,8 @@ export default {
                 fetchPolicy: 'no-cache',
                 mutation: removeMutation,
                 variables: {
-                  id: item.id
-                }
+                  id: item.id,
+                },
               })
               .then(({ data }) => {
                 vm.items.splice(i, 1)
@@ -261,7 +250,7 @@ export default {
                 instance.confirmLoading = false
                 vm.$toast({ type: 'error', title: err.message })
               })
-          }
+          },
         })
       }
     },
@@ -273,7 +262,7 @@ export default {
             mutation build {
               build
             }
-          `
+          `,
         })
         .then(({ data }) => {
           this.$modal({
@@ -284,13 +273,13 @@ export default {
             confirm: (instance) => {
               this.building = false
               instance.done()
-            }
+            },
           })
         })
         .catch((error) => {
           this.$modal({
             title: '构建失败',
-            content: error.message
+            content: error.message,
           })
           this.building = false
         })
@@ -305,8 +294,19 @@ export default {
       } else {
         this.items.unshift(newRow)
       }
+    },
+  },
+  head() {
+    return {
+      title: '管理 | hiweb',
     }
-  }
+  },
+  beforeRouteUpdate(to, from, next) {
+    const page = +to.query.page
+    this.forcePage = page - 1
+    this.getData(to.query.type, { page })
+    next()
+  },
 }
 </script>
 

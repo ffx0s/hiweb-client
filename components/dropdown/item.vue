@@ -1,8 +1,8 @@
 <template>
   <!-- eslint-disable-next-line vue/require-component-is -->
   <component
-    v-bind="$attrs"
     :is="tag"
+    v-bind="$attrs"
     :class="[$style.item, $style[align], $style[size]]"
   >
     <slot />
@@ -11,21 +11,22 @@
 
 <script>
 export default {
+  name: 'DropdownItem',
   inheritAttrs: false,
   props: {
     size: {
       type: String,
-      default: 'large'
+      default: 'large',
     },
     tag: {
       type: String,
-      default: 'div'
+      default: 'div',
     },
     align: {
       type: String,
-      default: ''
-    }
-  }
+      default: '',
+    },
+  },
 }
 </script>
 
