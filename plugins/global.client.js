@@ -30,3 +30,10 @@ Vue.directive('github-login', githubLogin)
 Vue.directive('transfer-dom', transferDom)
 
 Vue.component('CommentItem', CommentItem)
+
+// 解决 generate 生成的 200.html 无 apollo.defaultClient 对象导致报错的问题
+if (process.client) {
+  if (window.__NUXT && !window.__NUXT__.apollo) {
+    window.__NUXT__.apollo = { defaultClient: {} }
+  }
+}
