@@ -5,10 +5,10 @@
         v-for="archive in archives"
         :key="archive.id"
         :class="$style.item"
-        :to="'/archives/' + archive.link + '/'"
+        :to="archive.link"
         active-class=""
       >
-        <span>{{ archive.date }}</span>
+        <span>{{ archive.title }}</span>
         <span :class="$style.num">{{ archive.postsNumber }}</span>
       </nuxt-link>
     </template>
@@ -48,8 +48,8 @@ export default {
         if (!docs.hasOwnProperty('__ob__')) {
           docs.forEach((archive) => {
             const date = archive.date
-            archive.date = formatDate(date, 'YYYY年 MM月')
-            archive.link = formatDate(date, 'YYYY-MM')
+            archive.link = `/archives/${formatDate(date, 'YYYY-MM')}/`
+            archive.title = formatDate(date, 'YYYY年 MM月')
           })
         }
         return docs
