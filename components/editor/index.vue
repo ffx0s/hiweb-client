@@ -23,7 +23,7 @@ export default {
     this.removeCss = loadCSS('MuyaCSS', cdn + '/assets/muya/index.min.css?v8')
     setTimeout(() => {
       if (!window.Muya) {
-        loadJS(cdn + '/assets/muya/renderer.8d0df435175a5a05e197.js').then(
+        loadJS(cdn + '/assets/muya/renderer.aea5043844802b8f37da.js').then(
           this.createInstance
         )
       } else {

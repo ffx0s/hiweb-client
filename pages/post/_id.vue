@@ -12,6 +12,7 @@ import SideView from '@/components/sideView'
 import Card from '@/components/cards/c1'
 import Comment from '@/components/comment'
 import { transition } from '@/plugins/transition.client'
+import { loadCSS } from 'lvan/utils/shared'
 import RightSide from './modules/rightSide'
 
 const postQuery = gql`
@@ -75,6 +76,12 @@ export default {
           adjacentPosts: data.adjacentPosts,
         }
       })
+  },
+  mounted() {
+    loadCSS(
+      'katex.min.css',
+      'https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css'
+    )
   },
   head() {
     return {
