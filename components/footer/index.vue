@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.footer">
-    <a href="http://www.miibeian.gov.cn/" target="_blank">
+    <a href="https://beian.miit.gov.cn/" target="_blank">
       粤ICP备15009058号-1
     </a>
     &nbsp;
