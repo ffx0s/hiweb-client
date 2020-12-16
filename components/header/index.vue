@@ -27,6 +27,14 @@
         >
           {{ category.name }}
         </nuxt-link>
+        <a
+          :class="$style.navItem"
+          href="http://jsrun.net/u/ffx0s"
+          target="__blank"
+          title="代码笔记"
+        >
+          Code
+        </a>
         <nuxt-link :class="$style.navItem" to="/archives/page/1/">
           存档
         </nuxt-link>
