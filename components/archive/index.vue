@@ -1,27 +1,27 @@
 <template>
   <div :class="$style.archive">
     <TimeLine :title="date | formatDate('YYYY年MM月')">
-      <TimeLineItem v-for="post in posts" :key="post.id" :class="$style.item">
-        <nuxt-link
-          v-if="post.poster"
-          :to="'/post/' + post.id + '/'"
-          :class="$style.left"
-        >
-          <client-only>
-            <img v-lazy="post.poster + '!/sq/100'" />
-          </client-only>
-        </nuxt-link>
-        <div :class="$style.right">
-          <p :class="$style.date">
-            {{ post.created | formatDate('YYYY-MM-DD') }}
-          </p>
+      <TimeLineItem v-for="post in posts" :key="post.id">
+        <div :class="$style.item">
+          <p :class="$style.date">{{ post.created | formatDate('DD') }}日</p>
           <nuxt-link
+            v-if="post.poster"
             :to="'/post/' + post.id + '/'"
-            :title="post.title"
-            class="v-text-primary"
+            :class="$style.left"
           >
-            {{ post.title }}
+            <client-only>
+              <img v-lazy="post.poster + '!/sq/100'" />
+            </client-only>
           </nuxt-link>
+          <div :class="$style.right">
+            <nuxt-link
+              :to="'/post/' + post.id + '/'"
+              :title="post.title"
+              class="v-text-primary"
+            >
+              {{ post.title }}
+            </nuxt-link>
+          </div>
         </div>
       </TimeLineItem>
     </TimeLine>
@@ -58,23 +58,21 @@ export default {
   }
 }
 .date {
-  padding: 4px 0;
-  font-size: 12px;
+  font-size: 16px;
   color: var(--textRegular);
 }
 .item {
+  margin-left: -8px;
   display: flex;
-  overflow: hidden;
-  margin-top: -5px;
 }
 .left {
-  margin-top: 5px;
+  margin-left: 12px;
   margin-right: 10px;
   display: block;
   width: 60px;
   height: 60px;
   border-radius: 4px;
-  background-color: var(--background);
+  background-color: var(--lightBackgroundActive);
   overflow: hidden;
   & img {
     border-radius: inherit;

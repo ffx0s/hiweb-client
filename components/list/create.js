@@ -33,6 +33,8 @@ export default function createList({
   keywords,
   routeOptions,
   slotComponent,
+  category = '',
+  tag = '',
 }) {
   return {
     transition,
@@ -61,8 +63,8 @@ export default function createList({
           variables: {
             limit: 8,
             page: params.page ? +params.page : 1,
-            category: params.category || '',
-            tag: params.tag || '',
+            category: category || params.category,
+            tag: tag || params.tag,
           },
         })
         .then((result) => {

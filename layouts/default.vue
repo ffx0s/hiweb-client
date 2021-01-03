@@ -9,6 +9,7 @@
         <div :class="{ active: leftSideActive }" class="side left-side">
           <div class="left-side__scroll">
             <Tools />
+            <Links />
           </div>
           <div
             class="left-side__toggle"
@@ -28,6 +29,7 @@
 import AnimatedRoute from 'lvan/route/nuxt'
 import AppHeader from '@/components/header'
 import Tools from '@/components/side/tools'
+import Links from '@/components/side/Links'
 import Drawer from '@/components/drawer'
 
 export default {
@@ -35,6 +37,7 @@ export default {
     AnimatedRoute,
     AppHeader,
     Tools,
+    Links,
     Drawer,
   },
   data() {

@@ -25,6 +25,7 @@
     />
 
     <div slot="side">
+      <Notes />
       <Archive />
       <Tag />
       <AppFooter />
@@ -38,6 +39,7 @@ import Pagination from '@/components/pagination'
 import Error from '@/layouts/error'
 import Archive from '@/components/side/archive'
 import Tag from '@/components/side/tag'
+import Notes from '@/components/side/notes'
 import AppFooter from '@/components/footer'
 import SideView from '@/components/sideView'
 
@@ -49,6 +51,7 @@ export default {
     Error,
     Archive,
     Tag,
+    Notes,
     AppFooter,
     SideView,
   },
