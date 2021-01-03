@@ -29,7 +29,7 @@
 import AnimatedRoute from 'lvan/route/nuxt'
 import AppHeader from '@/components/header'
 import Tools from '@/components/side/tools'
-import Links from '@/components/side/Links'
+import Links from '@/components/side/links'
 import Drawer from '@/components/drawer'
 
 export default {
