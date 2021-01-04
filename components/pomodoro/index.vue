@@ -63,7 +63,7 @@ export default {
         content: [{ required: true, message: '请填写通知内容' }],
       },
       form: {
-        time: 0.1,
+        time: 30,
         enabled: false,
         title: '🍅',
         content: '皇上该休息啦！',
