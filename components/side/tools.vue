@@ -17,15 +17,20 @@
     >
       {{ tool.name }}
     </a>
+    <Pomodoro v-slot="{ show }">
+      <a :class="$style.item" href="javascript:;" @click="show">🍅 番茄钟</a>
+    </Pomodoro>
   </Box>
 </template>
 
 <script>
 import Box from '@/components/box'
+import Pomodoro from '@/components/pomodoro'
 
 export default {
   components: {
     Box,
+    Pomodoro,
   },
   data() {
     return {

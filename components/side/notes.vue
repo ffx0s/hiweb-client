@@ -53,8 +53,8 @@ export default {
 <style lang="postcss" module>
 .link {
   display: block;
-  padding: 8px 0;
-  font-size: 14px;
+  padding: 7px 0;
+  font-size: 16px;
   color: var(--textPrimary);
 }
 </style>
