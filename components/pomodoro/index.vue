@@ -57,11 +57,11 @@ function countDown(countDownDate, countDownCallback, endCallback) {
     const minutes = Math.floor(distance / 1000 / 60)
     const seconds = Math.floor((distance / 1000) % 60)
 
-    countDownCallback(minutes, seconds, distance)
-
     if (distance < 0) {
       clearInterval(timer)
       endCallback()
+    } else {
+      countDownCallback(minutes, seconds, distance)
     }
   }, 1000)
 
@@ -91,19 +91,25 @@ export default {
         title: '🍅',
         content: '皇上该休息啦！',
       },
-      // 专注时间倒计时
-      notifyCountDownText: '',
-      // 休息时间倒计时
-      restCountDownText: '',
+      // 时间倒计时
+      countDownText: '',
       // 当前通知权限的状态
       permissionState: '',
+      // 是否为休息状态
+      isRest: false,
+      // 番茄数量
+      count: 0,
     }
   },
   computed: {
     // 当前番茄钟状态（处于哪个阶段：专注中/休息中）
     pomodoroState() {
-      if (this.notifyCountDownText) return '专注中 ' + this.notifyCountDownText
-      if (this.restCountDownText) return '休息中 ' + this.restCountDownText
+      const count = ' 🍅 ' + this.count
+      if (this.countDownText) {
+        return (
+          (this.isRest ? '休息中 ' : '专注中 ') + this.countDownText + count
+        )
+      }
       return this.form.enabled ? '待启动' : '已关闭'
     },
   },
@@ -119,7 +125,7 @@ export default {
     this.permissionState = Notification?.permission || '不支持'
 
     // 开始计时通知
-    this.startCountDown({ ...this.form })
+    this.startCountDown(0, { ...this.form })
   },
   methods: {
     show() {
@@ -139,9 +145,9 @@ export default {
       if (this.$refs.form.checkAll(callback)) {
         localStorage.POMODORO_SETTINGS = JSON.stringify(this.form)
         this.requestPermission().then(() => {
-          this.notifyCountDownText = ''
-          this.restCountDownText = ''
-          this.startCountDown({ ...this.form })
+          this.countDownText = ''
+          this.countDownText = ''
+          this.startCountDown(0, { ...this.form })
         })
         this.$toast({ type: 'success' })
       }
@@ -163,7 +169,7 @@ export default {
         }
       })
     },
-    startCountDown(options) {
+    startCountDown(state, options) {
       if (!window.Notification) return
 
       clearTimeout(this.timer)
@@ -171,43 +177,32 @@ export default {
       // 拒绝授予通知权限或为关闭状态则不执行
       if (Notification.permission === 'denied' || !options.enabled) return
 
-      function countDownFormat(minutes, seconds) {
-        return (
-          String(minutes).padStart(2, 0) + ':' + String(seconds).padStart(2, 0)
-        )
-      }
+      this.isRest = state === 1
 
-      if (!this.notifyCountDownText) {
-        // 专注倒计时
-        const notifyTime = options.notifyTime * 60 * 1000
-        this.timer = countDown(
-          new Date().getTime() + notifyTime,
-          (minutes, seconds) => {
-            this.notifyCountDownText = countDownFormat(minutes, seconds)
-          },
-          () => {
+      const time =
+        (this.isRest ? options.restTime : options.notifyTime) * 60 * 1000
+
+      this.timer = countDown(
+        new Date().getTime() + time,
+        (minutes, seconds) => {
+          this.countDownText =
+            String(minutes).padStart(2, 0) +
+            ':' +
+            String(seconds).padStart(2, 0)
+        },
+        () => {
+          if (this.isRest) {
+            this.startCountDown(0, options)
+          } else {
             // 检查用户是否同意接受通知
             if (Notification.permission === 'granted') {
               this.createNotify(options)
-              this.startCountDown(options)
-              this.notifyCountDownText = ''
+              this.count++
             }
+            this.startCountDown(1, options)
           }
-        )
-      } else {
-        // 休息倒计时
-        const restTime = options.restTime * 60 * 1000
-        this.timer = countDown(
-          new Date().getTime() + restTime,
-          (minutes, seconds) => {
-            this.restCountDownText = countDownFormat(minutes, seconds)
-          },
-          () => {
-            this.startCountDown(options)
-            this.restCountDownText = ''
-          }
-        )
-      }
+        }
+      )
     },
   },
 }
