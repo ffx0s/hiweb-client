@@ -163,7 +163,7 @@ export default {
       return this.requestPermission().then((permission) => {
         if (permission === 'granted') {
           return new Notification(options.title, {
-            body: options.content + new Date(),
+            body: options.content,
             icon: 'http://localhost:3000/favicon-32x32.png?v=WG23BK35Xy',
           })
         }
